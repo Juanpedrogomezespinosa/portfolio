@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+// Asegúrate de tener la imagen en esta ruta o ajusta la importación
+import avatarImage from '@/assets/avatar.jpg'; 
+
 interface Props {
   t: (key: string) => string;
   lang: string;
@@ -6,35 +10,91 @@ interface Props {
 const { t, lang } = Astro.props;
 ---
 
-<section id="home" class="flex flex-col items-center justify-center py-20 md:py-32 text-center px-4">
-    <!-- Photo -->
-    <div class="relative mb-8">
-        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl mx-auto">
-            <img 
-                src="/src/assets/avatar.jpg" 
-                alt="Profile" 
-                class="w-full h-full object-cover"
-            />
-        </div>
-        <div class="absolute bottom-0 right-0 bg-green-500 w-6 h-6 rounded-full border-4 border-white dark:border-[#0B1120]"></div>
+<section id="home" class="relative flex flex-col items-center justify-center py-24 md:py-32 text-center px-4 overflow-hidden">
+    
+    <!-- Efecto de Fondo "Nebulosa" detrás del avatar (El toque mágico) -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-500/20 via-purple-500/20 to-blue-500/20 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+    <!-- BARRA LATERAL DE REDES SOCIALES (Flotante Izquierda en Desktop) -->
+    <div class="hidden lg:flex flex-col gap-6 fixed left-8 top-1/2 -translate-y-1/2 z-20">
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/juanpedroge/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-blue-500 transition-colors transform hover:scale-110" aria-label="LinkedIn">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+        </a>
+        
+        <!-- GitHub -->
+        <a href="https://github.com/Juanpedrogomezespinosa/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors transform hover:scale-110" aria-label="GitHub">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+            </svg>
+        </a>
+
+        <!-- Línea decorativa vertical -->
+        <!-- ELIMINADA LA LÍNEA BLANCA QUE NO GUSTABA -->
+        <!-- <div class="w-[1px] h-24 bg-gradient-to-b from-slate-700 to-transparent mx-auto"></div> -->
     </div>
 
-    <!-- Name & Description -->
-    <h1 class="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
-        Juanpe <span class="text-blue-600">Gómez</span>
-    </h1>
-    <p class="text-xl md:text-2xl font-medium text-blue-600 dark:text-blue-400 mb-6">
-        {t('hero.role')}
-    </p>
-    <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
-        {t('hero.description')}
-    </p>
+    <!-- Contenido Central -->
+    <div class="relative z-10">
+        <!-- Foto de Perfil con Anillo y Estado -->
+        <div class="relative mb-8 group inline-block">
+            <!-- Anillo de gradiente más vibrante (Morado/Rosa/Azul) -->
+            <div class="w-40 h-40 md:w-48 md:h-48 rounded-full p-[3px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl mx-auto hover:shadow-purple-500/50 transition-shadow duration-500">
+                <!-- CAMBIO AQUÍ: border-4 border-slate-950 para que coincida con el fondo oscuro -->
+                <div class="w-full h-full rounded-full overflow-hidden border-4 border-slate-950 relative bg-slate-950">
+                     <Image 
+                        src={avatarImage} 
+                        alt="Juanpe Gómez" 
+                        width={192} 
+                        height={192} 
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                </div>
+            </div>
+            <!-- Indicador de Estado (Online/Disponible) con pulso -->
+            <!-- CAMBIO AQUÍ: border-slate-950 -->
+            <div class="absolute bottom-3 right-3 md:bottom-5 md:right-5 w-5 h-5 bg-green-500 border-4 border-slate-950 rounded-full z-20 animate-pulse" title="Disponible para trabajar"></div>
+        </div>
 
-    <!-- Say Hello Button -->
-    <a href={`/${lang}#contact`} class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/25">
-        <span>{t('hero.btn')}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-        </svg>
-    </a>
+        <!-- Nombre y Título -->
+        <div class="space-y-6 max-w-3xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-2 drop-shadow-xl">
+                Juanpe <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Gómez</span>
+            </h1>
+            
+            <h2 class="text-xl md:text-2xl font-medium text-slate-300">
+                {t('hero.role')}
+            </h2>
+            
+            <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                {t('hero.description')}
+            </p>
+        </div>
+
+        <!-- Botones de Acción (Móvil: Iconos sociales aquí también) -->
+        <div class="mt-10 flex flex-col items-center gap-6">
+            <a 
+                href={`/${lang}#contact`} 
+                class="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_-5px_rgba(37,99,235,0.5)] hover:shadow-[0_0_30px_-5px_rgba(37,99,235,0.7)] hover:-translate-y-1"
+            >
+                <span>{t('hero.btn')}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+            </a>
+
+            <!-- Iconos sociales solo visibles en Móvil -->
+            <div class="flex lg:hidden gap-8 mt-4">
+                <a href="https://www.linkedin.com/in/juanpedroge/" target="_blank" class="text-slate-400 hover:text-blue-400 transition-colors p-2">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://github.com/Juanpedrogomezespinosa/" target="_blank" class="text-slate-400 hover:text-white transition-colors p-2">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
 </section>
