@@ -1,13 +1,5 @@
 ---
-import PruebaReact from '../components/pruebaReact';
-import Layout from '../layouts/Layout.astro';
+// src/pages/index.astro
+// This file redirects the user to the default language (Spanish)
+return Astro.redirect('/es');
 ---
-
-<Layout title="Mi Portafolio">
-	<main class="bg-gray-900 h-screen flex flex-col items-center justify-center text-white">
-		<h1 class="text-4xl font-bold text-blue-500 mb-4">Prueba de Sistema</h1>
-        
-        <p class="text-gray-400">Si ves esto azul y centrado, Tailwind funciona.</p>
-				<PruebaReact client:load />
-	</main>
-</Layout>
