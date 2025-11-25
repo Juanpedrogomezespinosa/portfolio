@@ -52,7 +52,7 @@ export const projects: Project[] = [
       es: "Una plataforma de comercio electrónico robusta con arquitectura desacoplada. Frontend en Angular y Backend en Node.js.",
       en: "A robust decoupled e-commerce platform. Angular Frontend and Node.js Backend.",
     },
-    tags: ["Node.js", "Express", "Angular", "Tailwind"],
+    tags: ["Node.js", "MySQL", "Express", "Angular", "Tailwind"],
     image: footerImage,
     contentImage: footerContent,
     gallery: [
@@ -97,7 +97,7 @@ export const projects: Project[] = [
       es: "Red social vertical para amantes del cine con chat en tiempo real.",
       en: "Vertical social network for movie lovers with real-time chat.",
     },
-    tags: ["PHP", "JavaScript", "HTML5", "CSS3", "MySQL"],
+    tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "MySQL"],
     image: cinevaImage,
     contentImage: cinevaContent,
     gallery: [cinevaContent2, cinevaContent3, cinevaContent4],
