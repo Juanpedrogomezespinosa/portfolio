@@ -1,54 +1,284 @@
 ---
-import { projects } from '@/data/projects'; // Importamos los datos reales
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Navbar from '@/components/shared/Navbar';
+import { projects, type Project } from '@/data/projects';
+import { ui, defaultLang } from '@/i18n/ui';
+import { Image } from 'astro:assets';
 
-interface Props {
-  t: (key: string) => string;
-  lang: string; // Necesitamos saber el idioma para elegir la descripción correcta
+export function getStaticPaths() {
+  const paths: { 
+    params: { lang: string; id: string }; 
+    props: { project: Project } 
+  }[] = [];
+  
+  projects.forEach(project => {
+    paths.push({ params: { lang: 'es', id: project.id }, props: { project } });
+    paths.push({ params: { lang: 'en', id: project.id }, props: { project } });
+  });
+
+  return paths;
 }
 
-const { t, lang } = Astro.props;
+interface Props {
+  project: Project;
+}
+
+const { lang } = Astro.params;
+const { project } = Astro.props;
+
+const t = (key: string) => {
+    // @ts-ignore
+    return ui[lang]?.[key] || ui[defaultLang][key];
+}
+
+const navLabels = {
+    home: t('nav.home'),
+    about: t('nav.about'),
+    skills: t('nav.skills'),
+    experience: t('nav.experience'),
+    projects: t('nav.projects'),
+};
+
+const description = lang === 'es' ? project.description.es : project.description.en;
+const challenges = project.challenges ? (lang === 'es' ? project.challenges.es : project.challenges.en) : '';
+const learnings = project.learnings ? (lang === 'es' ? project.learnings.es : project.learnings.en) : '';
+const features = project.features ? (lang === 'es' ? project.features.es : project.features.en) : [];
+
+// Preparamos todas las imágenes para el script (Principal + Galería)
+const allImages = [project.contentImage, ...(project.gallery || [])];
 ---
 
-<section id="projects" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-16">{t('projects.title')}</h2>
+<BaseLayout title={`${project.title} | Juanpe Portfolio`} lang={lang}>
+    
+    <Navbar client:load lang={lang} labels={navLabels} />
+
+    <!-- MAIN CONTAINER: 
+         Móvil: Scroll normal, altura automática (min-h-screen).
+         Escritorio (lg): Altura fija (h-[calc(100vh-80px)]), sin scroll global (overflow-hidden).
+    -->
+    <main class="flex-1 w-full max-w-[1800px] mx-auto px-4 py-6 flex flex-col lg:h-[calc(100vh-80px)] lg:overflow-hidden">
         
-        <div class="grid md:grid-cols-3 gap-8">
-            {projects.map((p) => (
-                <article class="group relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300 flex flex-col">
-                    
-                    {/* Imagen con efecto zoom */}
-                    <div class="h-48 w-full overflow-hidden">
-                        <img 
-                            src={p.image} 
-                            alt={p.title} 
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                    </div>
-
-                    <div class="p-6 flex flex-col flex-1">
-                        {/* Tags */}
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            {p.tags.slice(0, 3).map(tag => (
-                                <span class="text-xs font-semibold px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-md">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">{p.title}</h3>
-                        
-                        {/* Descripción según idioma */}
-                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3 flex-1">
-                            {lang === 'es' ? p.description.es : p.description.en}
-                        </p>
-
-                        <a href={`/${lang}/projects/${p.id}`} class="inline-flex items-center text-sm font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors mt-auto">
-                            {t('projects.view')} →
-                        </a>
-                    </div>
-                </article>
-            ))}
+        <!-- Breadcrumb -->
+        <div class="mb-4 flex-shrink-0">
+            <a href={`/${lang}#projects`} class="text-sm text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                {lang === 'es' ? 'Volver' : 'Back'}
+            </a>
         </div>
-    </div>
-</section>
+
+        <div class="grid lg:grid-cols-12 gap-8 h-full lg:overflow-hidden pb-4">
+            
+            <!-- COLUMNA IZQUIERDA: Visuales (7 cols) -->
+            <div class="lg:col-span-7 flex flex-col h-full gap-4 min-h-0">
+                
+                <!-- Cabecera -->
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">{project.title}</h1>
+                    <div class="flex flex-wrap gap-2">
+                        {project.tags.map((tag: string) => (
+                            <span class="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 rounded text-xs font-semibold border border-blue-100 dark:border-blue-800">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Visor de Imágenes -->
+                <div class="relative flex-1 min-h-[300px] lg:min-h-0 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-black group cursor-zoom-in" id="zoom-trigger">
+                    <img 
+                        id="main-display"
+                        src={allImages[0].src} 
+                        alt={project.title} 
+                        class="w-full h-full object-contain" 
+                    />
+                    
+                    <!-- Flechas de Navegación -->
+                    <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-blue-600 transition opacity-0 group-hover:opacity-100 z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-blue-600 transition opacity-0 group-hover:opacity-100 z-10">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                </div>
+
+                <!-- Tira de Miniaturas -->
+                <div class="h-16 lg:h-20 flex gap-2 overflow-x-auto pb-1 scrollbar-hide flex-shrink-0">
+                    {allImages.map((img, index) => (
+                        <button 
+                            class={`thumb-btn relative w-24 lg:w-28 h-full rounded-lg overflow-hidden border-2 cursor-pointer flex-shrink-0 transition-all ${index === 0 ? 'border-blue-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                            data-index={index}
+                            data-src={img.src}
+                        >
+                            <img src={img.src} class="w-full h-full object-cover" />
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: Scrollable Info (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col h-full lg:overflow-hidden glass rounded-2xl border border-slate-200 dark:border-slate-700/50">
+                
+                <!-- Links (Integrados arriba sin caja fea) -->
+                <div class="p-6 pb-4 flex flex-wrap justify-start lg:justify-end gap-4 border-b border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md flex-shrink-0 sticky top-0 z-10 lg:relative">
+                    {project.link && (
+                        <a href={project.link} target="_blank" class="text-sm font-semibold text-blue-600 hover:text-blue-500 flex items-center gap-1 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            Web
+                        </a>
+                    )}
+                    {project.repo && (
+                        <a href={project.repo} target="_blank" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub {project.repoBack ? '(Front)' : ''}
+                        </a>
+                    )}
+                    {project.repoBack && (
+                        <a href={project.repoBack} target="_blank" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub (Back)
+                        </a>
+                    )}
+                </div>
+
+                <!-- Contenido Scrolleable -->
+                <div class="p-6 pt-0 lg:overflow-y-auto space-y-8 flex-1 custom-scroll">
+                    
+                    {/* Descripción */}
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Descripción</h3>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">
+                            {description}
+                        </p>
+                    </div>
+
+                    {/* Funcionalidades */}
+                    {features.length > 0 && (
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                                <span class="text-blue-500">⚡</span> Funcionalidades
+                            </h3>
+                            <ul class="grid grid-cols-1 gap-2">
+                                {features.map((feat: string) => (
+                                    <li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+                                        <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        <span>{feat}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
+                    {/* Dificultades & Soluciones */}
+                    {challenges && (
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                                <span class="text-red-500">🔥</span> Retos y Soluciones
+                            </h3>
+                            <div class="text-sm text-slate-600 dark:text-slate-300 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 p-4 rounded-lg">
+                                {challenges}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Aprendizajes */}
+                    {learnings && (
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                                <span class="text-green-500">💡</span> Aprendizajes
+                            </h3>
+                            <div class="text-sm text-slate-600 dark:text-slate-300 bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/30 p-4 rounded-lg">
+                                {learnings}
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300 backdrop-blur-sm">
+            <button id="close-lightbox" class="absolute top-6 right-6 text-white/70 hover:text-white p-2 transition-colors bg-black/50 rounded-full">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
+        </div>
+
+    </main>
+
+    <!-- LÓGICA GALERÍA Y LIGHTBOX -->
+    <script define:vars={{ allImages }}>
+        let currentIndex = 0;
+        const images = allImages.map(img => img.src);
+        const display = document.getElementById('main-display');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const thumbs = document.querySelectorAll('.thumb-btn');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const zoomTrigger = document.getElementById('zoom-trigger');
+        const closeLightbox = document.getElementById('close-lightbox');
+
+        function updateImage(index) {
+            currentIndex = index;
+            display.style.opacity = '0.5';
+            setTimeout(() => {
+                display.src = images[currentIndex];
+                display.style.opacity = '1';
+            }, 150);
+
+            thumbs.forEach((t, i) => {
+                if(i === currentIndex) {
+                    t.classList.add('border-blue-500', 'opacity-100');
+                    t.classList.remove('border-transparent', 'opacity-60');
+                    t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                    t.classList.remove('border-blue-500', 'opacity-100');
+                    t.classList.add('border-transparent', 'opacity-60');
+                }
+            });
+        }
+
+        prevBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let newIndex = currentIndex - 1;
+            if (newIndex < 0) newIndex = images.length - 1;
+            updateImage(newIndex);
+        });
+
+        nextBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let newIndex = currentIndex + 1;
+            if (newIndex >= images.length) newIndex = 0;
+            updateImage(newIndex);
+        });
+
+        thumbs.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const index = parseInt(btn.getAttribute('data-index') || '0');
+                updateImage(index);
+            });
+        });
+
+        zoomTrigger?.addEventListener('click', () => {
+            lightboxImg.src = images[currentIndex];
+            lightbox.classList.remove('hidden');
+            requestAnimationFrame(() => lightbox.classList.remove('opacity-0'));
+        });
+
+        const closeBox = () => {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => lightbox.classList.add('hidden'), 300);
+        };
+
+        closeLightbox?.addEventListener('click', closeBox);
+        lightbox?.addEventListener('click', (e) => { if(e.target === lightbox) closeBox(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBox();
+            if (e.key === 'ArrowLeft') prevBtn?.click();
+            if (e.key === 'ArrowRight') nextBtn?.click();
+        });
+    </script>
+
+</BaseLayout>

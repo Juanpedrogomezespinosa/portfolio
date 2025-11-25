@@ -1,27 +1,30 @@
 ---
-import { projects } from '@/data/projects'; // Importamos los datos reales
+import { projects } from '@/data/projects';
+import { Image } from 'astro:assets'; // ✅ Importamos el componente de imagen
 
 interface Props {
   t: (key: string) => string;
-  lang: string; // Necesitamos saber el idioma para elegir la descripción correcta
+  lang: string;
 }
 
 const { t, lang } = Astro.props;
 ---
 
 <section id="projects" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
         <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-16">{t('projects.title')}</h2>
         
         <div class="grid md:grid-cols-3 gap-8">
             {projects.map((p) => (
                 <article class="group relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:shadow-xl transition-all duration-300 flex flex-col">
                     
-                    {/* Imagen con efecto zoom */}
-                    <div class="h-48 w-full overflow-hidden">
-                        <img 
+                    {/* Imagen con efecto zoom usando Astro Image */}
+                    <div class="h-48 w-full overflow-hidden bg-slate-200 dark:bg-slate-700">
+                        <Image 
                             src={p.image} 
                             alt={p.title} 
+                            width={600} 
+                            height={400}
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                     </div>
