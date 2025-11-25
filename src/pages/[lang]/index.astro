@@ -26,7 +26,6 @@ const t = (key: string) => {
 }
 
 // ✅ PREPARAMOS LOS DATOS PARA EL NAVBAR AQUÍ (SERVER-SIDE)
-// Esto crea un objeto simple que sí puede viajar al navegador.
 const navLabels = {
     home: t('nav.home'),
     about: t('nav.about'),
@@ -42,12 +41,14 @@ const navLabels = {
   <Navbar client:load lang={lang} labels={navLabels} />
   
   <main>
-    <!-- Los componentes .astro SÍ pueden recibir la función t porque corren en el servidor -->
     <Hero t={t} lang={lang} />
     <About t={t} />
     <Skills t={t} />
     <Qualification t={t} />
-    <Projects t={t} />
+    
+    <!-- ✅ CORREGIDO: Ahora pasamos 'lang={lang}' porque Projects lo necesita para las descripciones -->
+    <Projects t={t} lang={lang} />
+    
     <Contact t={t} />
   </main>
   

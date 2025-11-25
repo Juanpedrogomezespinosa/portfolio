@@ -1,6 +1,6 @@
 ---
-// src/layouts/BaseLayout.astro
-import '/src/styles/global.css';
+import '@/styles/global.css';
+
 interface Props {
   title: string;
   description?: string;
@@ -24,7 +24,12 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-slate-50 dark:bg-[#0B1120] text-slate-900 dark:text-white transition-colors duration-300 min-h-screen">
+  <!-- 
+    ACTUALIZADO:
+    dark:bg-primary-950 -> Usamos tu morado más oscuro como fondo
+    dark:text-primary-100 -> Usamos tu lila claro para el texto
+  -->
+  <body class="bg-slate-50 dark:bg-primary-950 text-slate-900 dark:text-primary-100 transition-colors duration-300 min-h-screen">
     
     <div class="relative flex flex-col min-h-screen overflow-hidden">
         <slot />
