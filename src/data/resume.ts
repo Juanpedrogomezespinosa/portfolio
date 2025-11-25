@@ -62,7 +62,7 @@ export const cvData = {
     {
       company: "BuhlandCo (Suiza)",
       role: { es: "Desarrollador Front End", en: "Front End Developer" },
-      date: { es: "Abril 2025", en: "April 2025" },
+      date: { es: "Abril 2023", en: "April 2023" },
       description: {
         es: "Diseño y desarrollo de landing page oficial con soporte multilingüe (ES, EN, DE). Optimización visual y animaciones CSS personalizadas.",
         en: "Design and development of official landing page with multi-language support. Visual optimization and custom CSS animations.",
