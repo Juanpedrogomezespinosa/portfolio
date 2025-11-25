@@ -26,10 +26,10 @@ export const ui = {
     "skills.frontend": "Frontend",
     "skills.backend": "Backend",
     "skills.qa": "QA & Testing",
-    "skills.tools": "Herramientas & DevOps", // ✅ NUEVA ETIQUETA
+    "skills.tools": "Herramientas & DevOps",
 
     "qual.title": "Estudios y Certificaciones",
-    "qual.degree": "Grado Ingeniería Informática",
+    "qual.degree": "Formación",
     "qual.cert": "Certificaciones Profesionales",
 
     "projects.title": "Proyectos Destacados",
