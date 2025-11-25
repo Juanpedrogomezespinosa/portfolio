@@ -10,7 +10,7 @@ export const ui = {
     "nav.home": "Inicio",
     "nav.about": "Sobre mí",
     "nav.skills": "Habilidades",
-    "nav.experience": "Experiencia", // Usado para Qualification
+    "nav.experience": "Experiencia",
     "nav.projects": "Proyectos",
     "nav.contact": "Contacto",
 
@@ -20,15 +20,13 @@ export const ui = {
     "hero.btn": "Di Hola",
 
     "about.title": "Sobre Mí",
-    "about.text":
-      "Soy un apasionado de la tecnología con X años de experiencia...",
-    "about.virtues": "Proactivo • Resiliente • Comunicativo",
     "btn.downloadCV": "Descargar CV",
 
     "skills.title": "Habilidades Técnicas",
     "skills.frontend": "Frontend",
     "skills.backend": "Backend",
     "skills.qa": "QA & Testing",
+    "skills.tools": "Herramientas & DevOps", // ✅ NUEVA ETIQUETA
 
     "qual.title": "Estudios y Certificaciones",
     "qual.degree": "Grado Ingeniería Informática",
@@ -57,14 +55,13 @@ export const ui = {
     "hero.btn": "Say Hello",
 
     "about.title": "About Me",
-    "about.text": "I am a technology enthusiast with X years of experience...",
-    "about.virtues": "Proactive • Resilient • Communicative",
     "btn.downloadCV": "Download CV",
 
     "skills.title": "Technical Skills",
     "skills.frontend": "Frontend",
     "skills.backend": "Backend",
     "skills.qa": "QA & Testing",
+    "skills.tools": "Tools & DevOps", // ✅ NEW LABEL
 
     "qual.title": "Studies & Certifications",
     "qual.degree": "Computer Science Degree",
