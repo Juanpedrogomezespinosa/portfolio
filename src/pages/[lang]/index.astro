@@ -10,6 +10,7 @@ import Skills from '@/components/landing/Skills.astro';
 import Qualification from '@/components/landing/Qualification.astro';
 import Projects from '@/components/landing/Projects.astro';
 import Contact from '@/components/landing/Contact.astro';
+import Footer from '@/components/shared/Footer.astro';
 
 import { ui, defaultLang } from '@/i18n/ui';
 
@@ -60,8 +61,6 @@ const navLabels = {
     <Contact t={t} />
   </main>
   
-  <footer class="py-8 text-center text-sm text-slate-500 dark:text-slate-600">
-    © 2025 Juanpe Portfolio. Built with Astro & React.
-  </footer>
+  <Footer t={t} lang={lang} />
 
 </BaseLayout>
