@@ -29,7 +29,8 @@ export default function Navbar({ lang, labels }: Props) {
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-slate-950/90 px-4 py-4 backdrop-blur-xl transition-all duration-300">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
         <a href={`/${lang}`} className="flex items-center gap-2 group">
-          <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-blue-600 to-indigo-600 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
+          {/* CAMBIO AQUÍ: from-purple-600 to-blue-500 */}
+          <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-purple-600 to-blue-500 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
             JP
           </div>
           <div className="flex flex-col">

@@ -113,7 +113,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
         className={`mt-4 py-4 px-8 rounded-xl font-bold text-lg text-white transition-all duration-300 shadow-xl
                 ${
                   status === "idle"
-                    ? "bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 hover:scale-[1.01] hover:shadow-blue-500/25"
+                    ? "bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl hover:scale-[1.01] hover:shadow-blue-500/25"
                     : ""
                 }
                 ${status === "sending" ? "bg-gray-700 cursor-wait" : ""}
