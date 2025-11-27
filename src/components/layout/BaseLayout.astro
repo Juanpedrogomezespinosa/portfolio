@@ -72,7 +72,6 @@ const {
         revealElements.forEach((el) => observer.observe(el));
       };
 
-      // Ejecutar al cargar y al navegar
       initReveal();
       document.addEventListener('astro:page-load', initReveal);
     </script>

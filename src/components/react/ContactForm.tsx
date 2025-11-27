@@ -52,19 +52,16 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
   };
 
   return (
-    // CLAVE: w-full para que ocupe el 100% del max-w-4xl de Astro
     <form
       ref={form}
       onSubmit={sendEmail}
       className="flex flex-col gap-6 w-full"
     >
-      {/* Fila superior: Nombre y Email en columnas en escritorio (Grid) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Campo Nombre */}
         <div className="flex flex-col gap-2">
           <label
             htmlFor="name"
-            className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
+            className="text-slate-700 dark:text-gray-300 text-sm font-semibold tracking-wide ml-1"
           >
             {ui.nameLabel}
           </label>
@@ -72,17 +69,15 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
             type="text"
             name="name"
             required
-            // Estilo 'Glass' sutil para los inputs
-            className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all placeholder:text-gray-600 backdrop-blur-sm"
+            className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-white/10 transition-all placeholder:text-gray-400 backdrop-blur-sm"
             placeholder={ui.placeholderName}
           />
         </div>
 
-        {/* Campo Email */}
         <div className="flex flex-col gap-2">
           <label
             htmlFor="email"
-            className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
+            className="text-slate-700 dark:text-gray-300 text-sm font-semibold tracking-wide ml-1"
           >
             {ui.emailLabel}
           </label>
@@ -90,17 +85,16 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
             type="email"
             name="email"
             required
-            className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all placeholder:text-gray-600 backdrop-blur-sm"
+            className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-white/10 transition-all placeholder:text-gray-400 backdrop-blur-sm"
             placeholder={ui.placeholderEmail}
           />
         </div>
       </div>
 
-      {/* Campo Mensaje (ocupa todo el ancho) */}
       <div className="flex flex-col gap-2">
         <label
           htmlFor="message"
-          className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
+          className="text-slate-700 dark:text-gray-300 text-sm font-semibold tracking-wide ml-1"
         >
           {ui.messageLabel}
         </label>
@@ -108,19 +102,18 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
           name="message"
           required
           rows={6}
-          className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all resize-none placeholder:text-gray-600 backdrop-blur-sm"
+          className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-white/10 transition-all resize-none placeholder:text-gray-400 backdrop-blur-sm"
           placeholder={ui.placeholderMessage}
         />
       </div>
 
-      {/* Botón (Ancho completo o ajustado, aquí lo pongo full para impacto móvil y desktop) */}
       <button
         type="submit"
         disabled={status === "sending" || status === "success"}
         className={`mt-4 py-4 px-8 rounded-xl font-bold text-lg text-white transition-all duration-300 shadow-xl
                 ${
                   status === "idle"
-                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 hover:scale-[1.01] hover:shadow-blue-500/25"
+                    ? "bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 hover:scale-[1.01] hover:shadow-blue-500/25"
                     : ""
                 }
                 ${status === "sending" ? "bg-gray-700 cursor-wait" : ""}

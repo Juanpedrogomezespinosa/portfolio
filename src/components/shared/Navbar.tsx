@@ -56,14 +56,15 @@ export default function Navbar({ lang, labels }: Props) {
   const languageSwitchLabel = lang === "es" ? "EN" : "ES";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-white/95 px-4 py-4 backdrop-blur-xl dark:bg-slate-950/95 dark:border-white/5 transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-white/5 bg-white/90 dark:bg-slate-950/90 px-4 py-4 backdrop-blur-xl transition-colors duration-300">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
         <a href={`/${lang}`} className="flex items-center gap-2 group">
+          {/* v4: bg-linear-to-br */}
           <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-blue-600 to-indigo-600 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
             JP
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold text-slate-900 dark:text-white leading-none tracking-tight group-hover:text-blue-500 transition-colors">
+            <span className="text-lg font-bold text-slate-900 dark:text-white leading-none tracking-tight group-hover:text-blue-600 transition-colors">
               Juanpe
             </span>
             <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 tracking-widest uppercase">
@@ -72,7 +73,6 @@ export default function Navbar({ lang, labels }: Props) {
           </div>
         </a>
 
-        {/* Menú en escritorio */}
         <nav className="hidden lg:flex items-center gap-8">
           {navigationLinks.map((link) => (
             <a
@@ -81,7 +81,7 @@ export default function Navbar({ lang, labels }: Props) {
               className="text-sm font-medium text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-white transition-colors relative group"
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
             </a>
           ))}
 
@@ -98,14 +98,13 @@ export default function Navbar({ lang, labels }: Props) {
 
             <a
               href={languageSwitchHref}
-              className="text-xs font-bold px-2 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-blue-500 hover:text-blue-500 transition-colors"
+              className="text-xs font-bold px-2 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-blue-600 hover:text-blue-600 transition-colors"
             >
               {languageSwitchLabel}
             </a>
           </div>
         </nav>
 
-        {/* Botón móvil (hamburguesa) */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="lg:hidden p-2 rounded-lg text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
@@ -129,9 +128,8 @@ export default function Navbar({ lang, labels }: Props) {
         </button>
       </div>
 
-      {/* Menú móvil desplegable */}
       {isMenuOpen && (
-        <nav className="absolute top-full left-0 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 md:hidden flex flex-col gap-2 shadow-xl animate-fade-in-down">
+        <nav className="absolute top-full left-0 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 md:hidden flex flex-col gap-2 shadow-xl">
           {navigationLinks.map((link) => (
             <a
               key={link.name}
