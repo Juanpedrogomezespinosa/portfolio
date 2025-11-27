@@ -1,6 +1,8 @@
 ---
-// ✅ CORREGIDO: Usamos '@' para importar y pasamos 'lang' a todos los componentes
-// que lo necesitan para mostrar el contenido traducido.
+// src/pages/[lang]/index.astro
+// Este archivo maneja las rutas:
+// - https://juanpe-gomez.vercel.app/es (Español)
+// - https://juanpe-gomez.vercel.app/en (Inglés)
 
 import BaseLayout from '@/components/layout/BaseLayout.astro';
 import Navbar from '@/components/shared/Navbar';
@@ -14,6 +16,8 @@ import Footer from '@/components/shared/Footer.astro';
 
 import { ui, defaultLang } from '@/i18n/ui';
 
+// Definir las rutas estáticas que Astro debe generar
+// Esto crea dos páginas: /es y /en
 export function getStaticPaths() {
   return [
     { params: { lang: 'es' } },
@@ -21,15 +25,20 @@ export function getStaticPaths() {
   ];
 }
 
+// Obtener el idioma desde los parámetros de la URL
+// Si la URL es /es, lang será 'es'
+// Si la URL es /en, lang será 'en'
 const { lang } = Astro.params;
 
-// Helper de traducción
+// Función helper para obtener traducciones
+// Busca primero en el idioma actual, si no existe usa el idioma por defecto
 const t = (key: string) => {
     // @ts-ignore
     return ui[lang]?.[key] || ui[defaultLang][key];
 }
 
-// ✅ PREPARAMOS LOS DATOS PARA EL NAVBAR AQUÍ (SERVER-SIDE)
+// Preparar las etiquetas del Navbar en el idioma correcto
+// Esto se hace en el servidor para que React reciba los datos ya traducidos
 const navLabels = {
     home: t('nav.home'),
     about: t('nav.about'),
@@ -41,23 +50,16 @@ const navLabels = {
 
 <BaseLayout title="Juanpe | Full Stack Portfolio" lang={lang}>
   
-  <!-- Pasamos navLabels en lugar de t -->
+
   <Navbar client:load lang={lang} labels={navLabels} />
   
   <main>
+
     <Hero t={t} lang={lang} />
-    
-    <!-- ✅ CORREGIDO: Pasamos 'lang={lang}' a About -->
     <About t={t} lang={lang} />
-    
     <Skills t={t} />
-    
-    <!-- ✅ CORREGIDO: Pasamos 'lang={lang}' a Qualification -->
     <Qualification t={t} lang={lang} />
-    
-    <!-- ✅ CORREGIDO: Pasamos 'lang={lang}' a Projects -->
     <Projects t={t} lang={lang} />
-    
     <Contact t={t} />
   </main>
   
