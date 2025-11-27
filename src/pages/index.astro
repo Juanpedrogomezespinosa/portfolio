@@ -1,12 +1,24 @@
+---
+// src/pages/index.astro
+// Fallback visual para la redirección.
+// Usamos HTML manual en vez de Astro.redirect para controlar el color de fondo.
+---
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <!-- Redirección Meta Refresh (Instantánea) -->
     <meta http-equiv="refresh" content="0;url=/es" />
+    <title>Cargando...</title>
+    
     <script is:inline>
+        // Redirección JS por si el meta falla
         window.location.href = '/es';
     </script>
 </head>
+<!-- FONDO OSCURO (#020617) para evitar el pantallazo blanco -->
 <body style="background-color: #020617; margin: 0; height: 100vh; overflow: hidden;">
 </body>
 </html>
