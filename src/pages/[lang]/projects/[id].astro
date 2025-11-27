@@ -47,11 +47,7 @@ const allImages = [project.contentImage, ...(project.gallery || [])];
 
 // --- LÓGICA DE NAVEGACIÓN ENTRE PROYECTOS (Circular) ---
 const currentIndex = projects.findIndex(p => p.id === project.id);
-
-// Si es el primero (índice 0), el anterior es el último del array.
 const prevProject = projects[currentIndex === 0 ? projects.length - 1 : currentIndex - 1];
-
-// Si es el último, el siguiente es el primero del array.
 const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentIndex + 1];
 ---
 
@@ -62,7 +58,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
     <main class="flex-1 w-full max-w-[1800px] mx-auto px-4 py-6 flex flex-col lg:h-[calc(100vh-80px)] lg:overflow-hidden" transition:animate="fade">
         
         <div class="mb-4 flex-shrink-0">
-            <a href={`/${lang}#projects`} class="text-sm text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-1">
+            <a href={`/${lang}#projects`} class="text-sm text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                 {lang === 'es' ? 'Volver' : 'Back'}
             </a>
@@ -73,32 +69,39 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             <div class="lg:col-span-7 flex flex-col h-auto lg:h-full gap-4 min-h-0">
                 
                 <div class="flex-shrink-0">
-                    <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">{project.title}</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h1>
                     <div class="flex flex-wrap gap-2">
                         {project.tags.map((tag: string) => (
-                            <span class="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 rounded text-xs font-semibold border border-blue-100 dark:border-blue-800">
+                            <span class="px-2 py-0.5 bg-blue-900/20 text-blue-300 rounded text-xs font-semibold border border-blue-800">
                                 {tag}
                             </span>
                         ))}
                     </div>
                 </div>
 
-                <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-black group cursor-zoom-in" id="zoom-trigger">
+                {/* CONTENEDOR PRINCIPAL DE IMAGEN */}
+                <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-800 bg-black group" id="zoom-container">
+                    
+                    {/* Imagen Principal */}
                     <img 
                         id="main-display"
                         src={allImages[0].src} 
                         alt={project.title} 
-                        class="w-full h-full object-contain transition-opacity duration-300" 
+                        class="w-full h-full object-contain transition-opacity duration-300 cursor-zoom-in" 
                     />
                     
-                    <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-blue-600 transition opacity-0 group-hover:opacity-100 z-10">
+                    {/* Botón Anterior (Sobre la imagen) */}
+                    <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white/80 hover:text-white hover:bg-blue-600 transition-all opacity-0 group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                     </button>
-                    <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 text-white hover:bg-blue-600 transition opacity-0 group-hover:opacity-100 z-10">
+                    
+                    {/* Botón Siguiente (Sobre la imagen) */}
+                    <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white/80 hover:text-white hover:bg-blue-600 transition-all opacity-0 group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                     </button>
                 </div>
 
+                {/* Miniaturas */}
                 <div class="h-16 lg:h-20 flex gap-2 overflow-x-auto pb-1 scrollbar-hide flex-shrink-0">
                     {allImages.map((img, index) => (
                         <button 
@@ -111,23 +114,23 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 </div>
             </div>
 
-            <div class="lg:col-span-5 flex flex-col h-auto lg:h-full lg:overflow-hidden glass rounded-2xl border border-slate-200 dark:border-slate-700/50">
+            <div class="lg:col-span-5 flex flex-col h-auto lg:h-full lg:overflow-hidden glass rounded-2xl border border-slate-800/50 bg-slate-900/50">
                 
-                <div class="p-6 pb-4 flex flex-wrap justify-start lg:justify-end gap-4 border-b border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md flex-shrink-0 sticky top-0 lg:relative z-10">
+                <div class="p-6 pb-4 flex flex-wrap justify-start lg:justify-end gap-4 border-b border-slate-800/50 bg-slate-900/50 backdrop-blur-md flex-shrink-0 sticky top-0 lg:relative z-10">
                     {project.link && (
-                        <a href={project.link} target="_blank" class="text-sm font-semibold text-blue-600 hover:text-blue-500 flex items-center gap-1 transition-colors">
+                        <a href={project.link} target="_blank" class="text-sm font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                             Web
                         </a>
                     )}
                     {project.repo && (
-                        <a href={project.repo} target="_blank" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors">
+                        <a href={project.repo} target="_blank" class="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                             GitHub {project.repoBack ? '(Front)' : ''}
                         </a>
                     )}
                     {project.repoBack && (
-                        <a href={project.repoBack} target="_blank" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-colors">
+                        <a href={project.repoBack} target="_blank" class="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-1 transition-colors">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                             GitHub (Back)
                         </a>
@@ -136,23 +139,21 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
 
                 <div class="p-6 pt-0 lg:overflow-y-auto space-y-8 flex-1 custom-scroll">
                     
-                    {/* Descripción */}
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Descripción</h3>
-                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">
+                        <h3 class="text-lg font-bold text-white mb-2">Descripción</h3>
+                        <p class="text-slate-300 leading-relaxed text-sm">
                             {description}
                         </p>
                     </div>
 
-                    {/* Funcionalidades */}
                     {features.length > 0 && (
                         <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
                                 <span class="text-blue-500">⚡</span> Funcionalidades
                             </h3>
                             <ul class="grid grid-cols-1 gap-2">
                                 {features.map((feat: string) => (
-                                    <li class="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+                                    <li class="flex items-start gap-2 text-sm text-slate-400">
                                         <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                         <span>{feat}</span>
                                     </li>
@@ -161,55 +162,49 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                         </div>
                     )}
 
-                    {/* Dificultades */}
                     {challenges && (
                         <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
                                 <span class="text-red-500">🔥</span> Retos y Soluciones
                             </h3>
-                            <div class="text-sm text-slate-600 dark:text-slate-300 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 p-4 rounded-lg">
+                            <div class="text-sm text-slate-300 bg-red-900/10 border border-red-900/30 p-4 rounded-lg">
                                 {challenges}
                             </div>
                         </div>
                     )}
 
-                    {/* Aprendizajes */}
                     {learnings && (
                         <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
                                 <span class="text-green-500">💡</span> Aprendizajes
                             </h3>
-                            <div class="text-sm text-slate-600 dark:text-slate-300 bg-green-50 dark:bg-green-900/10 border border-green-100 dark:border-green-900/30 p-4 rounded-lg">
+                            <div class="text-sm text-slate-300 bg-green-900/10 border border-green-900/30 p-4 rounded-lg">
                                 {learnings}
                             </div>
                         </div>
                     )}
 
-                    {/* --- NAVEGACIÓN ENTRE PROYECTOS --- */}
-                    <div class="border-t border-slate-200 dark:border-slate-800 pt-6 mt-8">
+                    <div class="border-t border-slate-800 pt-6 mt-8">
                         <div class="flex items-center justify-between gap-4">
                             
-                            {/* Proyecto Anterior */}
-                            <a href={`/${lang}/projects/${prevProject.id}`} class="group flex flex-col items-start gap-1 text-left flex-1 hover:bg-slate-50 dark:hover:bg-slate-800/50 p-2 rounded-lg transition-colors">
+                            <a href={`/${lang}/projects/${prevProject.id}`} class="group flex flex-col items-start gap-1 text-left flex-1 hover:bg-slate-800/50 p-2 rounded-lg transition-colors">
                                 <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold flex items-center gap-1 group-hover:text-blue-500 transition-colors">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                                     {t('project.prev')}
                                 </span>
-                                <span class="text-sm font-bold text-slate-700 dark:text-slate-200 line-clamp-1">
+                                <span class="text-sm font-bold text-slate-200 line-clamp-1">
                                     {prevProject.title}
                                 </span>
                             </a>
 
-                            {/* Separador Visual */}
-                            <div class="w-px h-8 bg-slate-200 dark:bg-slate-800 hidden md:block"></div>
+                            <div class="w-px h-8 bg-slate-800 hidden md:block"></div>
 
-                            {/* Proyecto Siguiente */}
-                            <a href={`/${lang}/projects/${nextProject.id}`} class="group flex flex-col items-end gap-1 text-right flex-1 hover:bg-slate-50 dark:hover:bg-slate-800/50 p-2 rounded-lg transition-colors">
+                            <a href={`/${lang}/projects/${nextProject.id}`} class="group flex flex-col items-end gap-1 text-right flex-1 hover:bg-slate-800/50 p-2 rounded-lg transition-colors">
                                 <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold flex items-center gap-1 group-hover:text-blue-500 transition-colors">
                                     {t('project.next')}
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                                 </span>
-                                <span class="text-sm font-bold text-slate-700 dark:text-slate-200 line-clamp-1">
+                                <span class="text-sm font-bold text-slate-200 line-clamp-1">
                                     {nextProject.title}
                                 </span>
                             </a>
@@ -221,71 +216,68 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             </div>
         </div>
 
+        {/* Lightbox */}
         <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300 backdrop-blur-sm select-none">
-            
-            {/* Botón Cerrar */}
             <button id="close-lightbox" class="absolute top-6 right-6 text-white/70 hover:text-white p-2 transition-colors bg-black/50 rounded-full z-20">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-
-            {/* Botón Anterior en Lightbox */}
             <button id="lightbox-prev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all z-20">
                 <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
             </button>
-
-            {/* Imagen Lightbox */}
             <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transition-transform duration-300" />
-
-            {/* Botón Siguiente en Lightbox */}
             <button id="lightbox-next" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all z-20">
                 <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
             </button>
         </div>
 
-        <footer class="py-8 text-center text-sm text-slate-500 dark:text-slate-600">
+        <footer class="py-8 text-center text-sm text-slate-600">
             © 2025 Juanpe Portfolio. Built with Astro & React.
         </footer>
 
     </main>
 
-    {/* LÓGICA DE GALERÍA (Adaptada para ClientRouter / View Transitions) */}
     <script define:vars={{ allImages }}>
         function initGallery() {
             let currentIndex = 0;
+            // Forzar actualización inmediata de las imágenes basadas en el prop actual
             const images = allImages.map(img => img.src);
             
-            // Elementos DOM
             const display = document.getElementById('main-display');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const thumbs = document.querySelectorAll('.thumb-btn');
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
+            const thumbs = document.querySelectorAll('.thumb-btn');
+
+            if (display) {
+                // IMPORTANTE: Resetear la imagen inmediatamente al cargar el componente
+                display.src = images[0];
+            }
+
+            // Elementos de Control
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
             const lightboxPrev = document.getElementById('lightbox-prev');
             const lightboxNext = document.getElementById('lightbox-next');
-            const zoomTrigger = document.getElementById('zoom-trigger');
+            const zoomContainer = document.getElementById('zoom-container');
             const closeLightbox = document.getElementById('close-lightbox');
 
-            // Seguridad: Si no hay display (quizás cambió la página), no hacemos nada
-            if (!display) return;
-
-            // Función Principal: Actualiza TODO (Vista normal y Lightbox si está abierto)
             function updateAllViews(index) {
                 currentIndex = index;
                 
-                // 1. Actualizar vista principal
-                display.style.opacity = '0.5';
-                setTimeout(() => {
-                    display.src = images[currentIndex];
-                    display.style.opacity = '1';
-                }, 150);
+                // Actualizar imagen principal
+                if (display) {
+                    display.style.opacity = '0.5';
+                    setTimeout(() => {
+                        display.src = images[currentIndex];
+                        display.style.opacity = '1';
+                    }, 150);
+                }
 
-                // 2. Actualizar Lightbox
+                // Actualizar Lightbox
                 if (lightboxImg) {
                     lightboxImg.src = images[currentIndex];
                 }
 
-                // 3. Actualizar Miniaturas
+                // Actualizar estado miniaturas
                 thumbs.forEach((t, i) => {
                     if(i === currentIndex) {
                         t.classList.add('border-blue-500', 'opacity-100');
@@ -305,52 +297,115 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 updateAllViews(newIndex);
             }
 
-            // --- LISTENERS ---
-            // Es buena práctica usar un AbortController o limpiar listeners, 
-            // pero en Astro View Transitions, volver a ejecutarlos suele bastar 
-            // porque el DOM se destruye y recrea.
+            // Limpieza y Asignación de Eventos (Clonación para eliminar listeners viejos)
+            
+            // 1. Botones Imagen Principal
+            const newPrevBtn = prevBtn?.cloneNode(true);
+            if (prevBtn && newPrevBtn) {
+                prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+                newPrevBtn.addEventListener('click', (e) => { 
+                    e.stopPropagation(); // Evitar que se abra el lightbox
+                    navigate(-1); 
+                });
+            }
 
-            prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
-            nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
-
-            thumbs.forEach(btn => {
-                btn.addEventListener('click', (e) => {
+            const newNextBtn = nextBtn?.cloneNode(true);
+            if (nextBtn && newNextBtn) {
+                nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+                newNextBtn.addEventListener('click', (e) => { 
                     e.stopPropagation(); 
-                    const index = parseInt(btn.getAttribute('data-index') || '0');
+                    navigate(1); 
+                });
+            }
+
+            // 2. Click en la imagen para abrir Lightbox
+            const newZoomContainer = zoomContainer?.cloneNode(false); // Clone shallow (solo el wrapper) para limpiar evento
+            // Nota: No podemos reemplazar el container entero porque perderíamos los hijos.
+            // Estrategia alternativa: Asignar evento al "display" img que sí podemos controlar o al container controlando targets.
+            
+            // Vamos a usar el container original pero asegurándonos de no duplicar lógica
+            // Simplemente añadimos el listener, Astro limpia el DOM en navegación completa, 
+            // pero para seguridad en transiciones SPA:
+            zoomContainer?.addEventListener('click', (e) => {
+                // Si el click fue en un botón, no hacemos nada (ya manejado por stopPropagation arriba, pero doble check)
+                if (e.target.closest('button')) return;
+
+                if(lightboxImg) lightboxImg.src = images[currentIndex];
+                lightbox?.classList.remove('hidden');
+                requestAnimationFrame(() => lightbox?.classList.remove('opacity-0'));
+            });
+
+            // 3. Miniaturas
+            thumbs.forEach(btn => {
+                // Clonamos para limpiar
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                
+                newBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                    const index = parseInt(newBtn.getAttribute('data-index') || '0');
                     updateAllViews(index);
                 });
             });
 
-            zoomTrigger?.addEventListener('click', () => {
-                lightboxImg.src = images[currentIndex];
-                lightbox.classList.remove('hidden');
-                requestAnimationFrame(() => lightbox.classList.remove('opacity-0'));
-            });
-
+            // 4. Lightbox Controls
             const closeBox = () => {
-                lightbox.classList.add('opacity-0');
-                setTimeout(() => lightbox.classList.add('hidden'), 300);
+                lightbox?.classList.add('opacity-0');
+                setTimeout(() => lightbox?.classList.add('hidden'), 300);
             };
 
-            closeLightbox?.addEventListener('click', closeBox);
+            const newCloseLb = closeLightbox?.cloneNode(true);
+            if (closeLightbox && newCloseLb) {
+                closeLightbox.parentNode.replaceChild(newCloseLb, closeLightbox);
+                newCloseLb.addEventListener('click', closeBox);
+            }
+
+            const newLbPrev = lightboxPrev?.cloneNode(true);
+            if (lightboxPrev && newLbPrev) {
+                lightboxPrev.parentNode.replaceChild(newLbPrev, lightboxPrev);
+                newLbPrev.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
+            }
+
+            const newLbNext = lightboxNext?.cloneNode(true);
+            if (lightboxNext && newLbNext) {
+                lightboxNext.parentNode.replaceChild(newLbNext, lightboxNext);
+                newLbNext.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+            }
+
+            // Cerrar al hacer click fuera de la imagen
             lightbox?.addEventListener('click', (e) => { 
                 if(e.target === lightbox) closeBox(); 
             });
 
-            lightboxPrev?.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
-            lightboxNext?.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+            // 5. Teclado (Global)
+            // Removemos listener anterior si existe (truco: usaremos una función nombrada para poder removerla si fuera necesario, 
+            // pero en Astro SPA es más fácil confiar en que el document listener se acumula si no tenemos cuidado.
+            // Para evitar duplicados en SPA, lo mejor es un AbortController o comprobar si ya existe.)
+            
+            // Solución simple para Astro: El script se re-ejecuta. 
+            // Vamos a usar un atributo en el body para saber si ya bindeamos el teclado globalmente, 
+            // AUNQUE, como cambiamos de página, las referencias a `Maps` (closure) cambian.
+            // Así que necesitamos reemplazar el listener del document.
+            
+            // Hack seguro: Sobrescribir el handler en una propiedad del window o usar un controlador.
+            if (window.galleryKeyHandler) {
+                document.removeEventListener('keydown', window.galleryKeyHandler);
+            }
 
-            document.addEventListener('keydown', (e) => {
+            window.galleryKeyHandler = (e) => {
                 if (e.key === 'Escape') closeBox();
+                // AHORA FUNCIONA SIEMPRE, NO SOLO CON LIGHTBOX
                 if (e.key === 'ArrowLeft') navigate(-1);
                 if (e.key === 'ArrowRight') navigate(1);
-            });
+            };
+
+            document.addEventListener('keydown', window.galleryKeyHandler);
         }
 
-        // Ejecutar en la carga inicial
+        // Inicializar
         initGallery();
-
-        // Ejecutar cada vez que Astro cambia la página (Navegación SPA)
+        
+        // Re-inicializar en navegación de Astro
         document.addEventListener('astro:page-load', initGallery);
     </script>
 

@@ -32,11 +32,11 @@ body {
   transition-duration: 300ms;
   min-height: 100vh;
 
-  /* ESTILOS FIJOS (Antes eran modo oscuro) */
-  background-color: #020617; /* Slate 950 */
-  color: #f8fafc; /* Slate 50 (Texto blanco/claro) */
+  /* FONDO BASE OSCURO */
+  background-color: #020617;
+  color: #f8fafc;
 
-  /* Fondo Gradiente activado siempre */
+  /* EL DEGRADADO MÁGICO (Copiado de tu versión original buena) */
   background-image: radial-gradient(
       ellipse 80% 60% at 50% -20%,
       #1e293b 0%,
@@ -45,9 +45,10 @@ body {
     radial-gradient(circle at bottom, #020617 0%, #020617 100%);
   background-attachment: fixed;
   background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
-/* Componente Base para Tarjetas (Estilo Oscuro Fijo) */
+/* Componente Base para Tarjetas */
 .card-base {
   background-color: #0f172a; /* Slate 900 */
   border: 1px solid #1e293b; /* Slate 800 */
@@ -56,20 +57,18 @@ body {
   transition: all 0.3s;
 }
 
-/* --- ANIMACIONES REVEAL --- */
+/* Animaciones */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
   filter: blur(5px);
 }
-
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
   filter: blur(0);
 }
-
 .reveal-delay-100 {
   transition-delay: 0.1s;
 }
@@ -80,7 +79,7 @@ body {
   transition-delay: 0.3s;
 }
 
-/* --- SCROLLBAR (Siempre estilo oscuro) --- */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
