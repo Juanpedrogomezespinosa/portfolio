@@ -59,7 +59,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
     
     <Navbar client:load lang={lang} labels={navLabels} />
 
-    <main class="flex-1 w-full max-w-[1800px] mx-auto px-4 py-6 flex flex-col lg:h-[calc(100vh-80px)] lg:overflow-hidden">
+    <main class="flex-1 w-full max-w-[1800px] mx-auto px-4 py-6 flex flex-col lg:h-[calc(100vh-80px)] lg:overflow-hidden" transition:animate="fade">
         
         <div class="mb-4 flex-shrink-0">
             <a href={`/${lang}#projects`} class="text-sm text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-1">
@@ -185,7 +185,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                         </div>
                     )}
 
-                    {/* --- NUEVA SECCIÓN: NAVEGACIÓN ENTRE PROYECTOS --- */}
+                    {/* --- NAVEGACIÓN ENTRE PROYECTOS --- */}
                     <div class="border-t border-slate-200 dark:border-slate-800 pt-6 mt-8">
                         <div class="flex items-center justify-between gap-4">
                             
@@ -248,100 +248,110 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
 
     </main>
 
+    {/* LÓGICA DE GALERÍA (Adaptada para ClientRouter / View Transitions) */}
     <script define:vars={{ allImages }}>
-        let currentIndex = 0;
-        const images = allImages.map(img => img.src);
-        
-        // Elementos DOM
-        const display = document.getElementById('main-display');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const thumbs = document.querySelectorAll('.thumb-btn');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxPrev = document.getElementById('lightbox-prev');
-        const lightboxNext = document.getElementById('lightbox-next');
-        const zoomTrigger = document.getElementById('zoom-trigger');
-        const closeLightbox = document.getElementById('close-lightbox');
-
-        // Función Principal: Actualiza TODO (Vista normal y Lightbox si está abierto)
-        function updateAllViews(index) {
-            currentIndex = index;
+        function initGallery() {
+            let currentIndex = 0;
+            const images = allImages.map(img => img.src);
             
-            // 1. Actualizar vista principal (con animación suave de opacidad)
-            display.style.opacity = '0.5';
-            setTimeout(() => {
-                display.src = images[currentIndex];
-                display.style.opacity = '1';
-            }, 150);
+            // Elementos DOM
+            const display = document.getElementById('main-display');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const thumbs = document.querySelectorAll('.thumb-btn');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const zoomTrigger = document.getElementById('zoom-trigger');
+            const closeLightbox = document.getElementById('close-lightbox');
 
-            // 2. Actualizar Lightbox (sin animación de opacidad, cambio directo)
-            if (lightboxImg) {
-                lightboxImg.src = images[currentIndex];
+            // Seguridad: Si no hay display (quizás cambió la página), no hacemos nada
+            if (!display) return;
+
+            // Función Principal: Actualiza TODO (Vista normal y Lightbox si está abierto)
+            function updateAllViews(index) {
+                currentIndex = index;
+                
+                // 1. Actualizar vista principal
+                display.style.opacity = '0.5';
+                setTimeout(() => {
+                    display.src = images[currentIndex];
+                    display.style.opacity = '1';
+                }, 150);
+
+                // 2. Actualizar Lightbox
+                if (lightboxImg) {
+                    lightboxImg.src = images[currentIndex];
+                }
+
+                // 3. Actualizar Miniaturas
+                thumbs.forEach((t, i) => {
+                    if(i === currentIndex) {
+                        t.classList.add('border-blue-500', 'opacity-100');
+                        t.classList.remove('border-transparent', 'opacity-60');
+                        t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    } else {
+                        t.classList.remove('border-blue-500', 'opacity-100');
+                        t.classList.add('border-transparent', 'opacity-60');
+                    }
+                });
             }
 
-            // 3. Actualizar Miniaturas (Borde activo)
-            thumbs.forEach((t, i) => {
-                if(i === currentIndex) {
-                    t.classList.add('border-blue-500', 'opacity-100');
-                    t.classList.remove('border-transparent', 'opacity-60');
-                    t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                } else {
-                    t.classList.remove('border-blue-500', 'opacity-100');
-                    t.classList.add('border-transparent', 'opacity-60');
-                }
+            function navigate(direction) {
+                let newIndex = currentIndex + direction;
+                if (newIndex < 0) newIndex = images.length - 1;
+                if (newIndex >= images.length) newIndex = 0;
+                updateAllViews(newIndex);
+            }
+
+            // --- LISTENERS ---
+            // Es buena práctica usar un AbortController o limpiar listeners, 
+            // pero en Astro View Transitions, volver a ejecutarlos suele bastar 
+            // porque el DOM se destruye y recrea.
+
+            prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
+            nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+
+            thumbs.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                    const index = parseInt(btn.getAttribute('data-index') || '0');
+                    updateAllViews(index);
+                });
+            });
+
+            zoomTrigger?.addEventListener('click', () => {
+                lightboxImg.src = images[currentIndex];
+                lightbox.classList.remove('hidden');
+                requestAnimationFrame(() => lightbox.classList.remove('opacity-0'));
+            });
+
+            const closeBox = () => {
+                lightbox.classList.add('opacity-0');
+                setTimeout(() => lightbox.classList.add('hidden'), 300);
+            };
+
+            closeLightbox?.addEventListener('click', closeBox);
+            lightbox?.addEventListener('click', (e) => { 
+                if(e.target === lightbox) closeBox(); 
+            });
+
+            lightboxPrev?.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
+            lightboxNext?.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeBox();
+                if (e.key === 'ArrowLeft') navigate(-1);
+                if (e.key === 'ArrowRight') navigate(1);
             });
         }
 
-        // Lógica de Navegación (Siguiente / Anterior)
-        function navigate(direction) {
-            let newIndex = currentIndex + direction;
-            if (newIndex < 0) newIndex = images.length - 1;
-            if (newIndex >= images.length) newIndex = 0;
-            updateAllViews(newIndex);
-        }
+        // Ejecutar en la carga inicial
+        initGallery();
 
-        // Listeners Vista Principal
-        prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
-        nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
-
-        // Listeners Miniaturas
-        thumbs.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Evitar abrir lightbox al clicar miniatura
-                const index = parseInt(btn.getAttribute('data-index') || '0');
-                updateAllViews(index);
-            });
-        });
-
-        // Listeners Lightbox (Abrir/Cerrar/Navegar)
-        zoomTrigger?.addEventListener('click', () => {
-            lightboxImg.src = images[currentIndex]; // Asegurar que abre la actual
-            lightbox.classList.remove('hidden');
-            requestAnimationFrame(() => lightbox.classList.remove('opacity-0'));
-        });
-
-        const closeBox = () => {
-            lightbox.classList.add('opacity-0');
-            setTimeout(() => lightbox.classList.add('hidden'), 300);
-        };
-
-        closeLightbox?.addEventListener('click', closeBox);
-        lightbox?.addEventListener('click', (e) => { 
-            // Cerrar solo si clicas en el fondo negro, no en la imagen ni botones
-            if(e.target === lightbox) closeBox(); 
-        });
-
-        // Listeners Botones Lightbox
-        lightboxPrev?.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
-        lightboxNext?.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
-
-        // Navegación por Teclado (Global)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeBox();
-            if (e.key === 'ArrowLeft') navigate(-1);
-            if (e.key === 'ArrowRight') navigate(1);
-        });
+        // Ejecutar cada vez que Astro cambia la página (Navegación SPA)
+        document.addEventListener('astro:page-load', initGallery);
     </script>
 
 </BaseLayout>

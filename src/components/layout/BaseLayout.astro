@@ -1,5 +1,7 @@
 ---
 import '@/styles/global.css';
+// 1. Importamos el Router de Cliente
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title: string;
@@ -20,12 +22,31 @@ const {
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/ico" href="/public/favicon_io/favicon.ico" />
+    <link rel="icon" type="image/ico" href="/favicon_io/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <ClientRouter />
+
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+    
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
   </head>
   
-  <!-- El body ya no necesita clases de color, las toma de global.css -->
   <body>
     <div class="relative flex flex-col min-h-screen overflow-hidden">
         <slot />
