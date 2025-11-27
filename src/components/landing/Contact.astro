@@ -1,30 +1,32 @@
 ---
+import { ContactForm } from '../react/ContactForm';
+
 interface Props {
   t: (key: string) => string;
 }
 const { t } = Astro.props;
+
+// Preparamos el objeto de textos para pasárselo a React
+const contactTexts = {
+    nameLabel: t('contact.name'),
+    emailLabel: t('contact.email'),
+    messageLabel: t('contact.message'),
+    placeholderName: "Juan Pérez", // Puedes poner esto en tu i18n si quieres
+    placeholderEmail: "juan@ejemplo.com",
+    placeholderMessage: t('contact.placeholder') || "Hola, me gustaría...",
+    buttonSend: t('contact.send'),
+    buttonSending: "Enviando...",
+    buttonSuccess: "¡Enviado con éxito!",
+    buttonError: "Error al enviar"
+};
 ---
 
 <section id="contact" class="py-20 px-4">
     <div class="max-w-xl mx-auto text-center">
         <h2 class="text-3xl font-bold mb-8">{t('contact.title')}</h2>
         
-        <form class="space-y-4 text-left p-8 card-base">
-            <div>
-                <label class="block text-sm font-medium mb-1 text-[var(--text-body)]">{t('contact.name')}</label>
-                <input type="text" class="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] focus:ring-2 focus:ring-blue-500 outline-none transition" />
-            </div>
-            <div>
-                <label class="block text-sm font-medium mb-1 text-[var(--text-body)]">{t('contact.email')}</label>
-                <input type="email" class="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] focus:ring-2 focus:ring-blue-500 outline-none transition" />
-            </div>
-            <div>
-                <label class="block text-sm font-medium mb-1 text-[var(--text-body)]">{t('contact.message')}</label>
-                <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-[var(--border-color)] bg-[var(--bg-input)] text-[var(--text-main)] focus:ring-2 focus:ring-blue-500 outline-none transition"></textarea>
-            </div>
-            <button class="w-full py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-600/20">
-                {t('contact.send')}
-            </button>
-        </form>
+        <div class="text-left p-8 card-base rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-2xl">
+            <ContactForm client:visible ui={contactTexts} />
+        </div>
     </div>
 </section>
