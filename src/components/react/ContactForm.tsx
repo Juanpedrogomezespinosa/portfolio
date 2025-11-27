@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
-// Definimos qué textos espera recibir este componente
 interface ContactFormProps {
   ui: {
     nameLabel: string;
@@ -53,106 +52,86 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
   };
 
   return (
-    // He quitado el contenedor con bg-[#111] para que se adapte mejor al layout de Astro,
-    // pero mantengo los estilos de los inputs que te gustaban.
+    // CLAVE: w-full para que ocupe el 100% del max-w-4xl de Astro
     <form
       ref={form}
       onSubmit={sendEmail}
-      className="flex flex-col gap-5 w-full"
+      className="flex flex-col gap-6 w-full"
     >
-      {/* Campo Nombre */}
-      <div className="flex flex-col gap-2">
-        <label
-          htmlFor="name"
-          className="text-gray-400 text-sm font-medium ml-1"
-        >
-          {ui.nameLabel}
-        </label>
-        <input
-          type="text"
-          name="name"
-          required
-          className="bg-[var(--bg-input)] border border-[var(--border-color)] text-[var(--text-main)] p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-500"
-          placeholder={ui.placeholderName}
-        />
+      {/* Fila superior: Nombre y Email en columnas en escritorio (Grid) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Campo Nombre */}
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="name"
+            className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
+          >
+            {ui.nameLabel}
+          </label>
+          <input
+            type="text"
+            name="name"
+            required
+            // Estilo 'Glass' sutil para los inputs
+            className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all placeholder:text-gray-600 backdrop-blur-sm"
+            placeholder={ui.placeholderName}
+          />
+        </div>
+
+        {/* Campo Email */}
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="email"
+            className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
+          >
+            {ui.emailLabel}
+          </label>
+          <input
+            type="email"
+            name="email"
+            required
+            className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all placeholder:text-gray-600 backdrop-blur-sm"
+            placeholder={ui.placeholderEmail}
+          />
+        </div>
       </div>
 
-      {/* Campo Email */}
-      <div className="flex flex-col gap-2">
-        <label
-          htmlFor="email"
-          className="text-gray-400 text-sm font-medium ml-1"
-        >
-          {ui.emailLabel}
-        </label>
-        <input
-          type="email"
-          name="email"
-          required
-          className="bg-[var(--bg-input)] border border-[var(--border-color)] text-[var(--text-main)] p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-gray-500"
-          placeholder={ui.placeholderEmail}
-        />
-      </div>
-
-      {/* Campo Mensaje */}
+      {/* Campo Mensaje (ocupa todo el ancho) */}
       <div className="flex flex-col gap-2">
         <label
           htmlFor="message"
-          className="text-gray-400 text-sm font-medium ml-1"
+          className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
         >
           {ui.messageLabel}
         </label>
         <textarea
           name="message"
           required
-          rows={5}
-          className="bg-[var(--bg-input)] border border-[var(--border-color)] text-[var(--text-main)] p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none placeholder:text-gray-500"
+          rows={6}
+          className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all resize-none placeholder:text-gray-600 backdrop-blur-sm"
           placeholder={ui.placeholderMessage}
         />
       </div>
 
+      {/* Botón (Ancho completo o ajustado, aquí lo pongo full para impacto móvil y desktop) */}
       <button
         type="submit"
         disabled={status === "sending" || status === "success"}
-        className={`mt-2 py-4 px-6 rounded-xl font-bold text-white transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]
+        className={`mt-4 py-4 px-8 rounded-xl font-bold text-lg text-white transition-all duration-300 shadow-xl
                 ${
                   status === "idle"
-                    ? "bg-blue-600 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20"
+                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 hover:scale-[1.01] hover:shadow-blue-500/25"
                     : ""
                 }
-                ${status === "sending" ? "bg-gray-600 cursor-wait" : ""}
+                ${status === "sending" ? "bg-gray-700 cursor-wait" : ""}
                 ${
-                  status === "success" ? "bg-green-500 pointer-events-none" : ""
+                  status === "success" ? "bg-green-600 pointer-events-none" : ""
                 }
-                ${status === "error" ? "bg-red-500" : ""}
+                ${status === "error" ? "bg-red-600" : ""}
             `}
       >
         {status === "idle" && ui.buttonSend}
-        {status === "sending" && (
-          <span className="flex items-center justify-center gap-2">
-            <svg
-              className="animate-spin h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            {ui.buttonSending}
-          </span>
-        )}
+        {status === "sending" && ui.buttonSending}
         {status === "success" && ui.buttonSuccess}
         {status === "error" && ui.buttonError}
       </button>

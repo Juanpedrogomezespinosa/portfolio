@@ -6,12 +6,11 @@ interface Props {
 }
 const { t } = Astro.props;
 
-// Preparamos el objeto de textos para pasárselo a React
 const contactTexts = {
     nameLabel: t('contact.name'),
     emailLabel: t('contact.email'),
     messageLabel: t('contact.message'),
-    placeholderName: "Juan Pérez", // Puedes poner esto en tu i18n si quieres
+    placeholderName: "Juan Pérez", 
     placeholderEmail: "juan@ejemplo.com",
     placeholderMessage: t('contact.placeholder') || "Hola, me gustaría...",
     buttonSend: t('contact.send'),
@@ -21,12 +20,12 @@ const contactTexts = {
 };
 ---
 
-<section id="contact" class="py-20 px-4">
-    <div class="max-w-xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-8">{t('contact.title')}</h2>
+<section id="contact" class="py-24 px-4 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-white">{t('contact.title')}</h2>
         
-        <div class="text-left p-8 card-base rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-2xl">
-            <ContactForm client:visible ui={contactTexts} />
-        </div>
+        <ContactForm client:visible ui={contactTexts} />
     </div>
 </section>
