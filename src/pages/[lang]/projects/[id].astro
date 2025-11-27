@@ -56,6 +56,13 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
     
     <Navbar client:load lang={lang} labels={navLabels} />
 
+    {/* DATA STORAGE: Guardar datos en el DOM para lectura directa */}
+    <div id="gallery-data" 
+         data-images={JSON.stringify(allImages.map(img => img.src))}
+         data-project-id={project.id}
+         class="hidden">
+    </div>
+
     <main class="flex-1 w-full max-w-[1800px] mx-auto px-4 py-6 flex flex-col lg:h-[calc(100vh-80px)] lg:overflow-hidden" transition:animate="fade">
         
         <div class="mb-4 flex-shrink-0">
@@ -82,33 +89,34 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
 
                 <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-800 bg-black group" id="zoom-container">
                     
-                    {/* Imagen Principal */}
+                    {/* Imagen Principal - key único por proyecto */}
                     <img 
                         id="main-display"
                         src={allImages[0].src} 
-                        alt={project.title} 
+                        alt={project.title}
+                        data-project-id={project.id}
                         class="w-full h-full object-contain transition-opacity duration-300 cursor-zoom-in" 
                     />
                     
-                    {/* Botón Anterior (Sobre la imagen) */}
-                    <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white/80 hover:text-white hover:bg-blue-600 transition-all opacity-0 group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    {/* Botón Anterior - Visible en móvil */}
+                    <button id="prev-btn" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/70 text-white/90 hover:text-white hover:bg-blue-600 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                     </button>
                     
-                    {/* Botón Siguiente (Sobre la imagen) */}
-                    <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white/80 hover:text-white hover:bg-blue-600 transition-all opacity-0 group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    {/* Botón Siguiente - Visible en móvil */}
+                    <button id="next-btn" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/70 text-white/90 hover:text-white hover:bg-blue-600 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                     </button>
                 </div>
 
                 {/* Miniaturas */}
-                <div class="h-16 lg:h-20 flex gap-2 overflow-x-auto pb-1 scrollbar-hide flex-shrink-0">
+                <div class="h-16 lg:h-20 flex gap-2 overflow-x-auto pb-1 scrollbar-hide flex-shrink-0" id="thumbnails-container">
                     {allImages.map((img, index) => (
                         <button 
-                            class={`thumb-btn relative w-24 lg:w-28 h-full rounded-lg overflow-hidden border-2 cursor-pointer flex-shrink-0 transition-all ${index === 0 ? 'border-blue-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                            class="thumb-btn relative w-24 lg:w-28 h-full rounded-lg overflow-hidden border-2 cursor-pointer flex-shrink-0 transition-all border-transparent opacity-60 hover:opacity-100"
                             data-index={index}
                         >
-                            <img src={img.src} class="w-full h-full object-cover" />
+                            <img src={img.src} alt={`${project.title} - imagen ${index + 1}`} class="w-full h-full object-cover" />
                         </button>
                     ))}
                 </div>
@@ -216,16 +224,16 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             </div>
         </div>
 
-        {/* Lightbox */}
-        <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300 backdrop-blur-sm select-none">
-            <button id="close-lightbox" class="absolute top-6 right-6 text-white/70 hover:text-white p-2 transition-colors bg-black/50 rounded-full z-20">
+        {/* Lightbox - Optimizado para Safari móvil */}
+        <div id="lightbox" class="fixed inset-0 z-[9999] bg-black/95 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300 backdrop-blur-sm select-none touch-none">
+            <button id="close-lightbox" class="absolute top-6 right-6 text-white/70 hover:text-white p-2 transition-colors bg-black/50 rounded-full z-[10000]">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
-            <button id="lightbox-prev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all z-20">
+            <button id="lightbox-prev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all z-[10000]">
                 <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transition-transform duration-300" />
-            <button id="lightbox-next" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all z-20">
+            <img id="lightbox-img" src="" alt="Vista ampliada" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transition-transform duration-300" />
+            <button id="lightbox-next" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all z-[10000]">
                 <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
             </button>
         </div>
@@ -234,23 +242,44 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
 
     </main>
 
-    <script define:vars={{ allImages }}>
-        function initGallery() {
-            let currentIndex = 0;
-            // Forzar actualización inmediata de las imágenes basadas en el prop actual
-            const images = allImages.map(img => img.src);
-            
-            const display = document.getElementById('main-display');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const thumbs = document.querySelectorAll('.thumb-btn');
+    <script>
+        // 🔥 SOLUCIÓN DEFINITIVA: Leer datos directamente del DOM
+        
+        let galleryCleanup: (() => void) | null = null;
 
-            if (display) {
-                // Resetear la imagen inmediatamente al cargar el componente
-                display.src = images[0];
+        function initGallery() {
+            console.log('🚀 Iniciando galería...');
+
+            // Limpiar instancia anterior
+            if (galleryCleanup) {
+                console.log('🧹 Limpiando galería anterior');
+                galleryCleanup();
             }
 
-            // Elementos de Control
+            // 1️⃣ LEER DATOS DEL DOM (NO de define:vars)
+            const galleryData = document.getElementById('gallery-data');
+            if (!galleryData) {
+                console.error('❌ No se encontró gallery-data');
+                return;
+            }
+
+            const images = JSON.parse(galleryData.dataset.images || '[]');
+            const projectId = galleryData.dataset.projectId;
+
+            console.log(`📦 Proyecto: ${projectId}, Imágenes: ${images.length}`);
+
+            if (images.length === 0) {
+                console.warn('⚠️ No hay imágenes para mostrar');
+                return;
+            }
+
+            let currentIndex = 0;
+            
+            // 2️⃣ REFERENCIAS AL DOM
+            const display = document.getElementById('main-display') as HTMLImageElement | null;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+            const thumbs = document.querySelectorAll('.thumb-btn');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
             const lightboxPrev = document.getElementById('lightbox-prev');
@@ -258,10 +287,36 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             const zoomContainer = document.getElementById('zoom-container');
             const closeLightbox = document.getElementById('close-lightbox');
 
-            function updateAllViews(index) {
+            // 3️⃣ RESETEAR TODAS LAS IMÁGENES INMEDIATAMENTE
+            console.log('🖼️ Cargando imágenes...');
+            
+            if (display) {
+                // Forzar limpieza y recarga
+                display.style.opacity = '0';
+                display.src = '';
+                setTimeout(() => {
+                    display.src = images[0];
+                    display.style.opacity = '1';
+                    display.dataset.projectId = projectId;
+                }, 50);
+            }
+
+            if (lightboxImg) {
+                lightboxImg.src = images[0];
+            }
+
+            // Actualizar miniaturas
+            thumbs.forEach((btn, i) => {
+                const img = btn.querySelector('img');
+                if (img && images[i]) {
+                    img.src = images[i];
+                }
+            });
+
+            // 4️⃣ FUNCIONES DE LA GALERÍA
+            function updateAllViews(index: number) {
                 currentIndex = index;
                 
-                // Actualizar imagen principal
                 if (display) {
                     display.style.opacity = '0.5';
                     setTimeout(() => {
@@ -270,12 +325,10 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                     }, 150);
                 }
 
-                // Actualizar Lightbox
                 if (lightboxImg) {
                     lightboxImg.src = images[currentIndex];
                 }
 
-                // Actualizar estado miniaturas
                 thumbs.forEach((t, i) => {
                     if(i === currentIndex) {
                         t.classList.add('border-blue-500', 'opacity-100');
@@ -288,107 +341,128 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 });
             }
 
-            function navigate(direction) {
+            function navigate(direction: number) {
                 let newIndex = currentIndex + direction;
                 if (newIndex < 0) newIndex = images.length - 1;
                 if (newIndex >= images.length) newIndex = 0;
                 updateAllViews(newIndex);
             }
 
-            // Limpieza y Asignación de Eventos
-            
-            // 1. Botones Imagen Principal
-            const newPrevBtn = prevBtn?.cloneNode(true);
-            if (prevBtn && newPrevBtn) {
-                prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
-                newPrevBtn.addEventListener('click', (e) => { 
-                    e.stopPropagation(); // Evitar que se abra el lightbox
-                    navigate(-1); 
-                });
-            }
-
-            const newNextBtn = nextBtn?.cloneNode(true);
-            if (nextBtn && newNextBtn) {
-                nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
-                newNextBtn.addEventListener('click', (e) => { 
-                    e.stopPropagation(); 
-                    navigate(1); 
-                });
-            }
-
-            // 2. Click en la imagen para abrir Lightbox
-            const newZoomContainer = zoomContainer?.cloneNode(false); 
-            
-            zoomContainer?.addEventListener('click', (e) => {
-                // Si el click fue en un botón, no hacemos nada 
-                if (e.target.closest('button')) return;
-
-                if(lightboxImg) lightboxImg.src = images[currentIndex];
-                lightbox?.classList.remove('hidden');
-                requestAnimationFrame(() => lightbox?.classList.remove('opacity-0'));
-            });
-
-            // 3. Miniaturas
-            thumbs.forEach(btn => {
-                // Clonamos para limpiar
-                const newBtn = btn.cloneNode(true);
-                btn.parentNode.replaceChild(newBtn, btn);
-                
-                newBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
-                    const index = parseInt(newBtn.getAttribute('data-index') || '0');
-                    updateAllViews(index);
-                });
-            });
-
-            // 4. Lightbox Controls
-            const closeBox = () => {
-                lightbox?.classList.add('opacity-0');
-                setTimeout(() => lightbox?.classList.add('hidden'), 300);
+            // 5️⃣ EVENT HANDLERS
+            const handlePrevClick = (e: Event) => { 
+                e.stopPropagation(); 
+                navigate(-1); 
             };
 
-            const newCloseLb = closeLightbox?.cloneNode(true);
-            if (closeLightbox && newCloseLb) {
-                closeLightbox.parentNode.replaceChild(newCloseLb, closeLightbox);
-                newCloseLb.addEventListener('click', closeBox);
-            }
+            const handleNextClick = (e: Event) => { 
+                e.stopPropagation(); 
+                navigate(1); 
+            };
 
-            const newLbPrev = lightboxPrev?.cloneNode(true);
-            if (lightboxPrev && newLbPrev) {
-                lightboxPrev.parentNode.replaceChild(newLbPrev, lightboxPrev);
-                newLbPrev.addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
-            }
+            const handleZoomClick = (e: Event) => {
+                if ((e.target as HTMLElement).closest('button')) return;
+                if(lightboxImg) lightboxImg.src = images[currentIndex];
+                lightbox?.classList.remove('hidden');
+                lightbox?.classList.add('flex');
+                requestAnimationFrame(() => {
+                    lightbox?.classList.remove('opacity-0');
+                    document.body.style.overflow = 'hidden';
+                });
+            };
 
-            const newLbNext = lightboxNext?.cloneNode(true);
-            if (lightboxNext && newLbNext) {
-                lightboxNext.parentNode.replaceChild(newLbNext, lightboxNext);
-                newLbNext.addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
-            }
+            const closeBox = () => {
+                lightbox?.classList.add('opacity-0');
+                setTimeout(() => {
+                    lightbox?.classList.add('hidden');
+                    lightbox?.classList.remove('flex');
+                    document.body.style.overflow = '';
+                }, 300);
+            };
 
-            // Cerrar al hacer click fuera de la imagen
-            lightbox?.addEventListener('click', (e) => { 
-                if(e.target === lightbox) closeBox(); 
-            });
+            const handleThumbClick = (e: Event) => {
+                const btn = e.currentTarget as HTMLElement;
+                const index = parseInt(btn.getAttribute('data-index') || '0');
+                updateAllViews(index);
+            };
 
-    
-            if (window.galleryKeyHandler) {
-                document.removeEventListener('keydown', window.galleryKeyHandler);
-            }
-
-            window.galleryKeyHandler = (e) => {
+            const handleKeyDown = (e: KeyboardEvent) => {
                 if (e.key === 'Escape') closeBox();
                 if (e.key === 'ArrowLeft') navigate(-1);
                 if (e.key === 'ArrowRight') navigate(1);
             };
 
-            document.addEventListener('keydown', window.galleryKeyHandler);
+            const handleLightboxBgClick = (e: Event) => {
+                if(e.target === lightbox) closeBox();
+            };
+
+            // 6️⃣ ASIGNAR EVENTOS
+            prevBtn?.addEventListener('click', handlePrevClick as EventListener);
+            nextBtn?.addEventListener('click', handleNextClick as EventListener);
+            zoomContainer?.addEventListener('click', handleZoomClick as EventListener);
+            closeLightbox?.addEventListener('click', closeBox);
+            lightboxPrev?.addEventListener('click', ((e: Event) => { e.stopPropagation(); navigate(-1); }) as EventListener);
+            lightboxNext?.addEventListener('click', ((e: Event) => { e.stopPropagation(); navigate(1); }) as EventListener);
+            lightbox?.addEventListener('click', handleLightboxBgClick as EventListener);
+            document.addEventListener('keydown', handleKeyDown);
+
+            thumbs.forEach(btn => {
+                btn.addEventListener('click', handleThumbClick as EventListener);
+            });
+
+            // Inicializar primera miniatura
+            updateAllViews(0);
+
+            console.log('✅ Galería inicializada correctamente');
+
+            // 7️⃣ FUNCIÓN DE LIMPIEZA
+            galleryCleanup = () => {
+                console.log('🧹 Ejecutando cleanup...');
+                prevBtn?.removeEventListener('click', handlePrevClick as EventListener);
+                nextBtn?.removeEventListener('click', handleNextClick as EventListener);
+                zoomContainer?.removeEventListener('click', handleZoomClick as EventListener);
+                closeLightbox?.removeEventListener('click', closeBox);
+                lightbox?.removeEventListener('click', handleLightboxBgClick as EventListener);
+                document.removeEventListener('keydown', handleKeyDown);
+                thumbs.forEach(btn => {
+                    btn.removeEventListener('click', handleThumbClick as EventListener);
+                });
+                document.body.style.overflow = '';
+                
+                // Limpiar imágenes del DOM
+                if (display) display.src = '';
+                if (lightboxImg) lightboxImg.src = '';
+            };
         }
 
-        // Inicializar
+        // 8️⃣ EVENTOS DEL CICLO DE VIDA DE ASTRO
+        
+        // Primera carga
         initGallery();
         
-        // Re-inicializar en navegación de Astro
-        document.addEventListener('astro:page-load', initGallery);
+        // Después de cada transición (CRÍTICO)
+        document.addEventListener('astro:after-swap', () => {
+            console.log('🔄 Astro: after-swap - Esperando DOM...');
+            // Esperar a que el DOM esté completamente actualizado
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    initGallery();
+                });
+            });
+        });
+        
+        // Antes de salir de la página
+        document.addEventListener('astro:before-preparation', () => {
+            console.log('👋 Astro: before-preparation - Limpiando...');
+            if (galleryCleanup) {
+                galleryCleanup();
+            }
+        });
+
+        // Cuando la página se carga completamente
+        document.addEventListener('astro:page-load', () => {
+            console.log('📄 Astro: page-load');
+            initGallery();
+        });
     </script>
 
 </BaseLayout>
