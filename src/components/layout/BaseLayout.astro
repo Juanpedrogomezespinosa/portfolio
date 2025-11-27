@@ -9,7 +9,7 @@ interface Props {
 
 const { 
   title, 
-  description = "Full Stack Developer Portfolio - React, Astro & Tailwind", 
+  description = "Full Stack Developer Portfolio", 
   lang = "es" 
 } = Astro.props;
 ---
@@ -20,20 +20,15 @@ const {
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/ico" href="/src/assets/favicon_io/favicon.ico" />
+    <link rel="icon" type="image/ico" href="/public/favicon_io/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <!-- 
-    ACTUALIZADO:
-    dark:bg-primary-950 -> Usamos tu morado más oscuro como fondo
-    dark:text-primary-100 -> Usamos tu lila claro para el texto
-  -->
-  <body class="bg-slate-50 dark:bg-primary-950 text-slate-900 dark:text-primary-100 transition-colors duration-300 min-h-screen">
-    
+  
+  <!-- El body ya no necesita clases de color, las toma de global.css -->
+  <body>
     <div class="relative flex flex-col min-h-screen overflow-hidden">
         <slot />
     </div>
-
   </body>
 </html>

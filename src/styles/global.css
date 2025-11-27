@@ -1,15 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  /* PALETA "COSMIC VIBRANT" */
-  --color-primary-950: #020617; /* Negro Azulado Profundo */
-  --color-primary-900: #0f172a;
-  --color-primary-800: #1e293b;
-  --color-primary-700: #334155;
-  --color-primary-600: #2563eb; /* Azul Eléctrico */
+  /* Colores de Acento (Compartidos) */
+  --color-primary-600: #2563eb;
   --color-primary-500: #3b82f6;
-  --color-primary-300: #93c5fd;
-  --color-primary-100: #f1f5f9;
+}
+
+/* VARIABLES SEMÁNTICAS */
+:root {
+  /* --- PALETA MODO CLARO (Clean & Professional) --- */
+  --bg-body: #f8fafc; /* Slate-50: Fondo general muy suave */
+  --bg-card: #ffffff; /* Blanco: Para tarjetas y secciones destacadas */
+  --bg-input: #ffffff; /* Fondo de inputs */
+
+  --text-main: #0f172a; /* Slate-900: Negro azulado para títulos */
+  --text-body: #475569; /* Slate-600: Gris oscuro para párrafos */
+  --text-muted: #94a3b8; /* Slate-400: Gris claro para detalles */
+
+  --border-color: #e2e8f0; /* Slate-200: Bordes sutiles */
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1); /* Sombra suave */
+}
+
+.dark {
+  /* --- PALETA MODO OSCURO (Cosmic Neon) --- */
+  --bg-body: #020617; /* Negro Azulado Profundo */
+  --bg-card: #0f172a; /* Azul muy oscuro para tarjetas */
+  --bg-input: #1e293b; /* Slate-800 */
+
+  --text-main: #f8fafc; /* Casi blanco */
+  --text-body: #cbd5e1; /* Slate-300 */
+  --text-muted: #64748b; /* Slate-500 */
+
+  --border-color: #1e293b; /* Slate-800 */
+  --shadow-card: none; /* Sin sombra en dark mode (o glow opcional) */
 }
 
 html {
@@ -18,42 +41,33 @@ html {
 
 body {
   @apply transition-colors duration-300 min-h-screen;
-  color-scheme: light dark;
 
-  background-color: #f8fafc;
+  /* Aplicamos las variables */
+  background-color: var(--bg-body);
+  color: var(--text-main);
 
-  /* DARK MODE: "Atmosphere Effect" mejorado
-     Usamos 'ellipse at top' para que la luz se expanda a lo ancho de la pantalla,
-     evitando que parezca un "foco" redondo cortado.
-  */
-  background-image: radial-gradient(
-      ellipse 80% 60% at 50% -20%,
-      var(--color-primary-800),
-      rgba(255, 255, 255, 0)
-    ),
-    radial-gradient(circle at 50% 100%, #0f172a, var(--color-primary-950));
-  background-attachment: fixed;
-  background-size: 100% 100%;
+  /* Reset de fondo para modo claro */
+  background-image: none;
 }
 
-/* Ajuste forzado para modo oscuro */
+/* MODO OSCURO: Aplicamos el efecto Nebulosa solo aquí */
 :is(.dark body) {
-  background-color: var(--color-primary-950);
-  /* Doble gradiente: Luz arriba (azul) y profundidad abajo (negro) */
   background-image: radial-gradient(
-      ellipse 120% 80% at 50% -20%,
+      ellipse 80% 60% at 50% -20%,
       #1e293b 0%,
       transparent 70%
     ),
     radial-gradient(circle at bottom, #020617 0%, #020617 100%);
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
 
-/* CLASE UTILITARIA: "Ghost Glass"
-   Úsala en tu Navbar y Tarjetas para que el fondo se vea a través de ellas.
-   Elimina el color sólido y usa solo desenfoque + borde sutil.
-*/
-.glass {
-  @apply bg-primary-950/10 backdrop-blur-md border border-white/5;
+/* CLASE UTILITARIA: Tarjetas Estándar */
+.card-base {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  @apply rounded-2xl transition-all duration-300;
 }
 
 /* Scrollbar */
@@ -64,5 +78,5 @@ body {
   @apply bg-transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary-700/50 rounded-full hover:bg-primary-600/80 transition-colors;
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full border-2 border-transparent bg-clip-content;
 }
