@@ -44,7 +44,8 @@ const { t, lang } = Astro.props;
 
         <div class="space-y-6 max-w-3xl mx-auto">
             <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-2 drop-shadow-sm reveal reveal-delay-100">
-                Juanpe <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600 dark:from-indigo-400 dark:to-cyan-400">Gómez</span>
+                {/* AQUI ESTÁ EL CAMBIO: from-purple-600 to-blue-500 */}
+                Juanpe <span class="text-transparent bg-clip-text bg-linear-to-br from-purple-600 to-blue-500">Gómez</span>
             </h1>
             
             <h2 class="text-xl md:text-2xl font-bold text-slate-300 reveal reveal-delay-200">
@@ -59,7 +60,7 @@ const { t, lang } = Astro.props;
         <div class="mt-10 flex flex-col items-center gap-6 reveal reveal-delay-300">
             <a 
                 href={`/${lang}#contact`} 
-                class="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-8 py-4 text-center leading-5 inline-flex items-center gap-2 transition-transform hover:-translate-y-1"
+                class="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-8 py-4 text-center leading-5 inline-flex items-center gap-2 transition-transform hover:-translate-y-1 shadow-lg shadow-blue-500/30"
             >
                 <span>{t('hero.btn')}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
