@@ -21,10 +21,10 @@ const contactTexts = {
 ---
 
 <section id="contact" class="py-24 px-4 relative overflow-hidden">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -z-10 pointer-events-none hidden dark:block"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
     <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-slate-900 dark:text-white reveal">{t('contact.title')}</h2>
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-white reveal">{t('contact.title')}</h2>
         
         <div class="reveal reveal-delay-200">
              <ContactForm client:visible ui={contactTexts} />

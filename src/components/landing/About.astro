@@ -9,19 +9,23 @@ const { t, lang } = Astro.props;
 
 const aboutText = lang === 'es' ? cvData.about.es : cvData.about.en;
 ---
-<section id="about" class="py-20 bg-primary-900/30 backdrop-blur-sm">
+<section id="about" class="py-20 bg-slate-900/50 backdrop-blur-sm border-y border-white/5">
     <div class="max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-8 reveal">{t('about.title')}</h2>
+        {/* Título blanco */}
+        <h2 class="text-3xl font-bold text-white mb-8 reveal">{t('about.title')}</h2>
         
-        <div class="prose prose-lg dark:prose-invert mx-auto text-slate-600 dark:text-slate-300 mb-8 leading-relaxed reveal reveal-delay-100">
+        {/* Texto gris suave, sin prose-invert */}
+        <div class="prose prose-lg mx-auto text-slate-300 mb-8 leading-relaxed reveal reveal-delay-100">
             <p>{aboutText}</p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-4 mb-10 text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-widest reveal reveal-delay-200">
+        {/* Tags en azul claro */}
+        <div class="flex flex-wrap justify-center gap-4 mb-10 text-sm font-semibold text-blue-400 uppercase tracking-widest reveal reveal-delay-200">
             {lang === 'es' ? 'Proactivo • Analítico • Trabajo en Equipo' : 'Proactive • Analytical • Teamwork'}
         </div>
 
-        <a href="/cv.pdf" download class="inline-flex items-center gap-2 px-6 py-3 border-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-white font-medium hover:border-blue-500 hover:text-blue-500 dark:hover:border-blue-400 dark:hover:text-blue-400 transition-colors glass reveal reveal-delay-300">
+        {/* Botón estilo oscuro (borde suave, texto blanco) */}
+        <a href="/cv.pdf" download class="inline-flex items-center gap-2 px-6 py-3 border-2 border-slate-700 rounded-lg text-white font-medium hover:border-blue-400 hover:text-blue-400 transition-colors glass reveal reveal-delay-300">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
             {t('btn.downloadCV')}
         </a>

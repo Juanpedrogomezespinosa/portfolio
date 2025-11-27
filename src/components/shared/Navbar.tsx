@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface Props {
   lang: string;
@@ -13,36 +13,6 @@ interface Props {
 
 export default function Navbar({ lang, labels }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const storedTheme = localStorage.getItem("theme");
-
-    if (storedTheme === "dark" || (!storedTheme && prefersDarkMode)) {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      setTheme("light");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-
-    setTheme(newTheme);
-  };
 
   const navigationLinks = [
     { name: labels.home, href: `/${lang}#home` },
@@ -56,18 +26,17 @@ export default function Navbar({ lang, labels }: Props) {
   const languageSwitchLabel = lang === "es" ? "EN" : "ES";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-white/5 bg-white/90 dark:bg-slate-950/90 px-4 py-4 backdrop-blur-xl transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-slate-950/90 px-4 py-4 backdrop-blur-xl transition-all duration-300">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
         <a href={`/${lang}`} className="flex items-center gap-2 group">
-          {/* v4: bg-linear-to-br */}
           <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-blue-600 to-indigo-600 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
             JP
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold text-slate-900 dark:text-white leading-none tracking-tight group-hover:text-blue-600 transition-colors">
+            <span className="text-lg font-bold text-white leading-none tracking-tight group-hover:text-blue-400 transition-colors">
               Juanpe
             </span>
-            <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 tracking-widest uppercase">
+            <span className="text-[10px] font-medium text-slate-400 tracking-widest uppercase">
               Portfolio
             </span>
           </div>
@@ -78,27 +47,19 @@ export default function Navbar({ lang, labels }: Props) {
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-white transition-colors relative group"
+              className="text-sm font-medium text-slate-300 hover:text-white transition-colors relative group"
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
             </a>
           ))}
 
-          <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-2"></div>
+          <div className="h-6 w-px bg-slate-800 mx-2"></div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors"
-              aria-label="Toggle Theme"
-            >
-              {theme === "light" ? "🌙" : "☀️"}
-            </button>
-
             <a
               href={languageSwitchHref}
-              className="text-xs font-bold px-2 py-1 rounded border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-blue-600 hover:text-blue-600 transition-colors"
+              className="text-xs font-bold px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-blue-400 hover:text-blue-400 transition-colors"
             >
               {languageSwitchLabel}
             </a>
@@ -107,7 +68,7 @@ export default function Navbar({ lang, labels }: Props) {
 
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="lg:hidden p-2 rounded-lg text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+          className="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
           aria-label="Toggle Menu"
         >
           <svg
@@ -129,29 +90,22 @@ export default function Navbar({ lang, labels }: Props) {
       </div>
 
       {isMenuOpen && (
-        <nav className="absolute top-full left-0 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 md:hidden flex flex-col gap-2 shadow-xl">
+        <nav className="absolute top-full left-0 w-full bg-slate-950 border-b border-slate-800 p-4 md:hidden flex flex-col gap-2 shadow-xl">
           {navigationLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setIsMenuOpen(false)}
-              className="px-4 py-3 rounded-lg text-base font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-blue-600 dark:hover:text-white transition-all"
+              className="px-4 py-3 rounded-lg text-base font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all"
             >
               {link.name}
             </a>
           ))}
 
-          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 mt-2 flex justify-between items-center px-4">
-            <button
-              onClick={toggleTheme}
-              className="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            >
-              {theme === "light" ? "🌙 Modo Oscuro" : "☀️ Modo Claro"}
-            </button>
-
+          <div className="pt-4 border-t border-slate-800 mt-2 flex justify-between items-center px-4">
             <a
               href={languageSwitchHref}
-              className="text-sm font-bold px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white"
+              className="text-sm font-bold px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
             >
               {languageSwitchLabel}
             </a>

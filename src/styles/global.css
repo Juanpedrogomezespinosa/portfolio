@@ -21,34 +21,6 @@
   }
 }
 
-:root {
-  /* --- MODO CLARO --- */
-  --bg-body: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-input: #ffffff;
-
-  --text-main: #0f172a;
-  --text-body: #334155;
-  --text-muted: #64748b;
-
-  --border-color: #e2e8f0;
-  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-}
-
-.dark {
-  /* --- MODO OSCURO --- */
-  --bg-body: #020617;
-  --bg-card: #0f172a;
-  --bg-input: #1e293b;
-
-  --text-main: #f8fafc;
-  --text-body: #cbd5e1;
-  --text-muted: #64748b;
-
-  --border-color: #1e293b;
-  --shadow-card: none;
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -58,14 +30,13 @@ body {
     text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
-
   min-height: 100vh;
-  background-color: var(--bg-body);
-  color: var(--text-main);
-  background-image: none;
-}
 
-:is(.dark body) {
+  /* ESTILOS FIJOS (Antes eran modo oscuro) */
+  background-color: #020617; /* Slate 950 */
+  color: #f8fafc; /* Slate 50 (Texto blanco/claro) */
+
+  /* Fondo Gradiente activado siempre */
   background-image: radial-gradient(
       ellipse 80% 60% at 50% -20%,
       #1e293b 0%,
@@ -76,10 +47,11 @@ body {
   background-size: 100% 100%;
 }
 
+/* Componente Base para Tarjetas (Estilo Oscuro Fijo) */
 .card-base {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-card);
+  background-color: #0f172a; /* Slate 900 */
+  border: 1px solid #1e293b; /* Slate 800 */
+  box-shadow: none;
   border-radius: 1rem;
   transition: all 0.3s;
 }
@@ -108,6 +80,7 @@ body {
   transition-delay: 0.3s;
 }
 
+/* --- SCROLLBAR (Siempre estilo oscuro) --- */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -115,11 +88,8 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
+  background-color: #334155;
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
-}
-:is(.dark ::-webkit-scrollbar-thumb) {
-  background-color: #334155;
 }

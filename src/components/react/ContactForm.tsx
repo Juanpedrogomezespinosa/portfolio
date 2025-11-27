@@ -61,7 +61,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
         <div className="flex flex-col gap-2">
           <label
             htmlFor="name"
-            className="text-slate-700 dark:text-gray-300 text-sm font-semibold tracking-wide ml-1"
+            className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
           >
             {ui.nameLabel}
           </label>
@@ -69,7 +69,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
             type="text"
             name="name"
             required
-            className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-white/10 transition-all placeholder:text-gray-400 backdrop-blur-sm"
+            className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all placeholder:text-gray-500 backdrop-blur-sm"
             placeholder={ui.placeholderName}
           />
         </div>
@@ -77,7 +77,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
         <div className="flex flex-col gap-2">
           <label
             htmlFor="email"
-            className="text-slate-700 dark:text-gray-300 text-sm font-semibold tracking-wide ml-1"
+            className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
           >
             {ui.emailLabel}
           </label>
@@ -85,7 +85,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
             type="email"
             name="email"
             required
-            className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-white/10 transition-all placeholder:text-gray-400 backdrop-blur-sm"
+            className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all placeholder:text-gray-500 backdrop-blur-sm"
             placeholder={ui.placeholderEmail}
           />
         </div>
@@ -94,7 +94,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="message"
-          className="text-slate-700 dark:text-gray-300 text-sm font-semibold tracking-wide ml-1"
+          className="text-gray-300 text-sm font-semibold tracking-wide ml-1"
         >
           {ui.messageLabel}
         </label>
@@ -102,7 +102,7 @@ export const ContactForm = ({ ui }: ContactFormProps) => {
           name="message"
           required
           rows={6}
-          className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white dark:focus:bg-white/10 transition-all resize-none placeholder:text-gray-400 backdrop-blur-sm"
+          className="w-full bg-white/5 border border-white/10 text-white p-4 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all resize-none placeholder:text-gray-500 backdrop-blur-sm"
           placeholder={ui.placeholderMessage}
         />
       </div>
