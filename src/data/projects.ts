@@ -47,7 +47,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "footer-ecommerce",
-    title: "Footer Ecommerce Ecosystem",
+    title: "Footer",
     description: {
       es: "Ecosistema de comercio electrónico completo con arquitectura desacoplada. Backend seguro en Node.js y Frontend reactivo en Angular, diseñado para escalar.",
       en: "Complete e-commerce ecosystem with decoupled architecture. Secure Node.js Backend and reactive Angular Frontend, designed for scalability.",
@@ -92,7 +92,7 @@ export const projects: Project[] = [
   },
   {
     id: "cineva",
-    title: "Cineva Social Network",
+    title: "Cineva",
     description: {
       es: "Red social vertical para cinéfilos desarrollada con arquitectura PHP nativa y lógica asíncrona avanzada.",
       en: "Vertical social network for film buffs developed with native PHP architecture and advanced asynchronous logic.",
@@ -128,7 +128,7 @@ export const projects: Project[] = [
   },
   {
     id: "buhlandco",
-    title: "Buhl And Co Swiss Rentals",
+    title: "Buhl And Co",
     description: {
       es: "Experiencia web corporativa de alto rendimiento con diseño suizo minimalista e internacionalización.",
       en: "High-performance corporate web experience with minimalist Swiss design and internationalization.",
