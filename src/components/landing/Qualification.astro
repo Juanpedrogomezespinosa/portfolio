@@ -12,7 +12,7 @@ const isEs = lang === 'es';
 
 <section id="qualification" class="py-20 px-4">
     <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold text-center text-white mb-16 reveal">{t('qual.title')}</h2>
+        <h2 class="text-3xl font-bold text-center text-white tracking-tight mb-16 reveal">{t('qual.title')}</h2>
 
         <div class="grid md:grid-cols-2 gap-12">
             
@@ -30,7 +30,9 @@ const isEs = lang === 'es';
                             <h4 class="font-bold text-white text-lg">{isEs ? job.role.es : job.role.en}</h4>
                             <p class="text-sm text-blue-400 font-medium mb-1">{job.company}</p>
                             <p class="text-xs text-slate-500 mb-2 font-mono">{isEs ? job.date.es : job.date.en}</p>
-                            <p class="text-sm text-slate-400 leading-relaxed">
+                            
+                            {/* Hereda color global (Slate-400) */}
+                            <p class="text-sm leading-relaxed">
                                 {isEs ? job.description.es : job.description.en}
                             </p>
                         </div>

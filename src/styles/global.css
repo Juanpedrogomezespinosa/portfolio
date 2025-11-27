@@ -32,11 +32,18 @@ body {
   transition-duration: 300ms;
   min-height: 100vh;
 
-  /* FONDO BASE OSCURO */
-  background-color: #020617;
-  color: #f8fafc;
+  /* --- CAMBIOS CLAVE --- */
 
-  /* EL DEGRADADO MÁGICO (Copiado de tu versión original buena) */
+  /* 1. FUENTE: Forzamos la misma que el sistema (Mac/Windows) para consistencia total */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* 2. COLOR BASE: Slate 400 (#94a3b8). 
+     Esto hará que todo el texto normal sea del gris suave del Hero, no blanco agresivo. */
+  color: #94a3b8;
+
+  background-color: #020617;
+
   background-image: radial-gradient(
       ellipse 80% 60% at 50% -20%,
       #1e293b 0%,
@@ -48,16 +55,14 @@ body {
   background-repeat: no-repeat;
 }
 
-/* Componente Base para Tarjetas */
 .card-base {
-  background-color: #0f172a; /* Slate 900 */
-  border: 1px solid #1e293b; /* Slate 800 */
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
   box-shadow: none;
   border-radius: 1rem;
   transition: all 0.3s;
 }
 
-/* Animaciones */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -79,7 +84,6 @@ body {
   transition-delay: 0.3s;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
