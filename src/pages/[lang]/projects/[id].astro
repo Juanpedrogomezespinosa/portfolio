@@ -46,7 +46,7 @@ const features = project.features ? (lang === 'es' ? project.features.es : proje
 
 const allImages = [project.contentImage, ...(project.gallery || [])];
 
-// --- LÓGICA DE NAVEGACIÓN ENTRE PROYECTOS (Circular) ---
+// --- LÓGICA DE NAVEGACIÓN ENTRE PROYECTOS ---
 const currentIndex = projects.findIndex(p => p.id === project.id);
 const prevProject = projects[currentIndex === 0 ? projects.length - 1 : currentIndex - 1];
 const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentIndex + 1];
@@ -80,7 +80,6 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                     </div>
                 </div>
 
-                {/* CONTENEDOR PRINCIPAL DE IMAGEN */}
                 <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-800 bg-black group" id="zoom-container">
                     
                     {/* Imagen Principal */}
@@ -247,7 +246,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             const thumbs = document.querySelectorAll('.thumb-btn');
 
             if (display) {
-                // IMPORTANTE: Resetear la imagen inmediatamente al cargar el componente
+                // Resetear la imagen inmediatamente al cargar el componente
                 display.src = images[0];
             }
 
@@ -296,7 +295,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 updateAllViews(newIndex);
             }
 
-            // Limpieza y Asignación de Eventos (Clonación para eliminar listeners viejos)
+            // Limpieza y Asignación de Eventos
             
             // 1. Botones Imagen Principal
             const newPrevBtn = prevBtn?.cloneNode(true);
@@ -318,15 +317,10 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             }
 
             // 2. Click en la imagen para abrir Lightbox
-            const newZoomContainer = zoomContainer?.cloneNode(false); // Clone shallow (solo el wrapper) para limpiar evento
-            // Nota: No podemos reemplazar el container entero porque perderíamos los hijos.
-            // Estrategia alternativa: Asignar evento al "display" img que sí podemos controlar o al container controlando targets.
+            const newZoomContainer = zoomContainer?.cloneNode(false); 
             
-            // Vamos a usar el container original pero asegurándonos de no duplicar lógica
-            // Simplemente añadimos el listener, Astro limpia el DOM en navegación completa, 
-            // pero para seguridad en transiciones SPA:
             zoomContainer?.addEventListener('click', (e) => {
-                // Si el click fue en un botón, no hacemos nada (ya manejado por stopPropagation arriba, pero doble check)
+                // Si el click fue en un botón, no hacemos nada 
                 if (e.target.closest('button')) return;
 
                 if(lightboxImg) lightboxImg.src = images[currentIndex];
@@ -376,24 +370,13 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 if(e.target === lightbox) closeBox(); 
             });
 
-            // 5. Teclado (Global)
-            // Removemos listener anterior si existe (truco: usaremos una función nombrada para poder removerla si fuera necesario, 
-            // pero en Astro SPA es más fácil confiar en que el document listener se acumula si no tenemos cuidado.
-            // Para evitar duplicados en SPA, lo mejor es un AbortController o comprobar si ya existe.)
-            
-            // Solución simple para Astro: El script se re-ejecuta. 
-            // Vamos a usar un atributo en el body para saber si ya bindeamos el teclado globalmente, 
-            // AUNQUE, como cambiamos de página, las referencias a `Maps` (closure) cambian.
-            // Así que necesitamos reemplazar el listener del document.
-            
-            // Hack seguro: Sobrescribir el handler en una propiedad del window o usar un controlador.
+    
             if (window.galleryKeyHandler) {
                 document.removeEventListener('keydown', window.galleryKeyHandler);
             }
 
             window.galleryKeyHandler = (e) => {
                 if (e.key === 'Escape') closeBox();
-                // AHORA FUNCIONA SIEMPRE, NO SOLO CON LIGHTBOX
                 if (e.key === 'ArrowLeft') navigate(-1);
                 if (e.key === 'ArrowRight') navigate(1);
             };

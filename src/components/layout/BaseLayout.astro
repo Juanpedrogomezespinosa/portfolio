@@ -5,25 +5,52 @@ import { ClientRouter } from 'astro:transitions';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
   lang?: string;
 }
 
 const { 
   title, 
-  description = "Full Stack Developer Portfolio", 
+  description = "Juanpe Gómez - Desarrollador Full Stack & QA Engineer. Portfolio profesional.", 
+  // La imagen por defecto busca en la carpeta public
+  image = '/portada-portafolio.png', 
   lang = "es" 
 } = Astro.props;
+
+// Construimos las URLs absolutas necesarias para el SEO
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
 <html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/ico" href="/favicon_io/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+    
+    {/* --- SEO BÁSICO --- */}
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    {/* --- OPEN GRAPH (Facebook, LinkedIn, WhatsApp) --- */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+
+    {/* --- TWITTER / X --- */}
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+
+    {/* Color del navegador en móvil */}
+    <meta name="theme-color" content="#020617" />
     
     <ClientRouter />
   </head>

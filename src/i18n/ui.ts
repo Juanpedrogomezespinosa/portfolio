@@ -41,7 +41,7 @@ export const ui = {
     "projects.title": "Proyectos Destacados",
     "projects.view": "Ver Proyecto",
 
-    // Navegación entre Proyectos (NUEVO)
+    // Navegación entre Proyectos
     "project.prev": "Anterior Proyecto",
     "project.next": "Siguiente Proyecto",
 
@@ -91,7 +91,7 @@ export const ui = {
     "projects.title": "Featured Projects",
     "projects.view": "View Project",
 
-    // Project Navigation (NEW)
+    // Project Navigation
     "project.prev": "Previous Project",
     "project.next": "Next Project",
 
