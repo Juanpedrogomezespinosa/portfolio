@@ -2,9 +2,6 @@
 import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 
-// Importar la imagen desde assets
-import defaultOgImage from '@/assets/footer-portada.png';
-
 interface Props {
   title: string;
   description?: string;
@@ -15,17 +12,17 @@ interface Props {
 const { 
   title, 
   description = "Juanpe Gómez - Desarrollador Full Stack & QA Engineer. Portfolio profesional.", 
-  // Usar la imagen importada (Astro la optimizará automáticamente)
   image,
   lang = "es" 
 } = Astro.props;
 
-// Construimos las URLs absolutas necesarias para el SEO
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// --- CONFIGURACIÓN DE IMAGEN OG ---
+const defaultImage = "/footer-portada.png"; 
 
-// Si no se pasa una imagen custom, usar la imagen por defecto importada
-// Astro automáticamente genera la URL correcta para imágenes en assets
-const socialImage = image || defaultOgImage.src;
+// Si entra una imagen por props (ej: proyecto), la usamos. Si no, usamos la default.
+const socialImage = image || defaultImage;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(socialImage, Astro.site);
 ---
 
