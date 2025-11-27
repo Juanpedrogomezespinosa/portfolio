@@ -7,7 +7,7 @@ export const defaultLang = "es";
 
 export const ui = {
   es: {
-    // Navegación
+    // Navegación Principal
     "nav.home": "Inicio",
     "nav.about": "Sobre mí",
     "nav.skills": "Habilidades",
@@ -19,7 +19,7 @@ export const ui = {
     "hero.role": "Desarrollador Full Stack & QA Engineer",
     "hero.description":
       "No solo escribo código, garantizo su calidad. Fusiono la lógica del desarrollo con la precisión del testing para construir aplicaciones web robustas, escalables y libres de errores.",
-    "hero.btn": "Hablemos", // "Di Hola" es simpático, "Hablemos" es una llamada a la acción (CTA) más profesional.
+    "hero.btn": "Hablemos",
 
     // Sobre Mí
     "about.title": "Sobre Mí",
@@ -41,6 +41,10 @@ export const ui = {
     "projects.title": "Proyectos Destacados",
     "projects.view": "Ver Proyecto",
 
+    // Navegación entre Proyectos (NUEVO)
+    "project.prev": "Anterior Proyecto",
+    "project.next": "Siguiente Proyecto",
+
     // Contacto
     "contact.title": "Contáctame",
     "contact.name": "Tu Nombre",
@@ -48,12 +52,12 @@ export const ui = {
     "contact.message": "Tu Mensaje",
     "contact.send": "Enviar Mensaje",
 
-    // Textos extra para el formulario interactivo (React)
+    // Textos extra para el formulario interactivo
     "contact.placeholder":
       "Hola Juanpe, me gustaría hablar contigo sobre un proyecto...",
   },
   en: {
-    // Navigation
+    // Main Navigation
     "nav.home": "Home",
     "nav.about": "About Me",
     "nav.skills": "Skills",
@@ -86,6 +90,10 @@ export const ui = {
     // Projects
     "projects.title": "Featured Projects",
     "projects.view": "View Project",
+
+    // Project Navigation (NEW)
+    "project.prev": "Previous Project",
+    "project.next": "Next Project",
 
     // Contact
     "contact.title": "Contact Me",
