@@ -38,7 +38,7 @@ export interface Project {
   link?: string;
   repo?: string;
   repoBack?: string;
-  // ✅ NUEVOS CAMPOS
+  // Campos extendidos para narrativa Senior
   features?: { es: string[]; en: string[] };
   challenges?: { es: string; en: string };
   learnings?: { es: string; en: string };
@@ -47,12 +47,12 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "footer-ecommerce",
-    title: "Footer Ecommerce",
+    title: "Footer Ecommerce Ecosystem",
     description: {
-      es: "Una plataforma de comercio electrónico robusta con arquitectura desacoplada. Frontend en Angular y Backend en Node.js.",
-      en: "A robust decoupled e-commerce platform. Angular Frontend and Node.js Backend.",
+      es: "Ecosistema de comercio electrónico completo con arquitectura desacoplada. Backend seguro en Node.js y Frontend reactivo en Angular, diseñado para escalar.",
+      en: "Complete e-commerce ecosystem with decoupled architecture. Secure Node.js Backend and reactive Angular Frontend, designed for scalability.",
     },
-    tags: ["Node.js", "MySQL", "Express", "Angular", "Tailwind"],
+    tags: ["Node.js", "MySQL", "Express", "Angular", "Tailwind", "JWT"],
     image: footerImage,
     contentImage: footerContent,
     gallery: [
@@ -69,35 +69,35 @@ export const projects: Project[] = [
     repoBack: "https://github.com/Juanpedrogomezespinosa/footer-back",
     features: {
       es: [
-        "Carrito de compras",
-        "Pasarela de pagos",
-        "Panel de administración",
-        "Gestión de usuarios",
+        "Control de Acceso basado en Roles (RBAC: Admin/User)",
+        "Dashboard Analítico (KPIs, Ventas, Stock)",
+        "Notificaciones transaccionales por Email",
+        "Variantes de productos complejas (Color/Precio/Stock)",
       ],
       en: [
-        "Shopping Cart",
-        "Payment Gateway",
-        "Admin Dashboard",
-        "User Management",
+        "Role-Based Access Control (RBAC: Admin/User)",
+        "Analytical Dashboard (KPIs, Sales, Stock)",
+        "Transactional Email Notifications",
+        "Complex Product Variants (Color/Price/Stock)",
       ],
     },
     challenges: {
-      es: "La sincronización entre el estado del frontend y la base de datos en tiempo real fue compleja.",
-      en: "Synchronizing frontend state with the database in real-time was complex.",
+      es: "El mayor reto fue modelar la base de datos relacional para soportar 'Familias de Productos'. Necesitaba que un producto padre (ej: Zapatilla Modelo X) tuviera múltiples hijos variantes, cada uno con su propio precio y stock independiente, manteniendo la integridad referencial en los pedidos.",
+      en: "The biggest challenge was modeling the relational database to support 'Product Families'. I needed a parent product (e.g., Shoe Model X) to have multiple variant children, each with its own independent price and stock, while maintaining referential integrity in orders.",
     },
     learnings: {
-      es: "Aprendí a estructurar una API REST escalable y a manejar estados complejos en Angular.",
-      en: "I learned how to structure a scalable REST API and handle complex states in Angular.",
+      es: "Consolidé mis conocimientos en seguridad (JWT, Hashing de contraseñas) y aprendí a orquestar flujos de negocio completos: desde el registro y validación por email hasta la gestión de estados de pedido (Enviado/Cancelado) en tiempo real.",
+      en: "I solidified my knowledge in security (JWT, Password Hashing) and learned to orchestrate complete business flows: from registration and email validation to real-time order status management (Shipped/Cancelled).",
     },
   },
   {
     id: "cineva",
     title: "Cineva Social Network",
     description: {
-      es: "Red social vertical para amantes del cine con chat en tiempo real.",
-      en: "Vertical social network for movie lovers with real-time chat.",
+      es: "Red social vertical para cinéfilos desarrollada con arquitectura PHP nativa y lógica asíncrona avanzada.",
+      en: "Vertical social network for film buffs developed with native PHP architecture and advanced asynchronous logic.",
     },
-    tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "MySQL"],
+    tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "Vanilla JS"],
     image: cinevaImage,
     contentImage: cinevaContent,
     gallery: [cinevaContent2, cinevaContent3, cinevaContent4],
@@ -105,35 +105,35 @@ export const projects: Project[] = [
     repo: "https://github.com/Juanpedrogomezespinosa/cineva",
     features: {
       es: [
-        "Chat en tiempo real",
-        "Perfiles de usuario",
-        "Comentarios y valoraciones",
-        "Buscador de películas",
+        "Chat en tiempo real (Lógica JS personalizada)",
+        "Feed Social (Likes, Comentarios, Amigos)",
+        "Buscador dinámico de películas",
+        "Diseño CSS puro sin frameworks",
       ],
       en: [
-        "Real-time chat",
-        "User profiles",
-        "Comments and ratings",
-        "Movie search",
+        "Real-time Chat (Custom JS Logic)",
+        "Social Feed (Likes, Comments, Friends)",
+        "Dynamic Movie Search",
+        "Pure CSS Design without frameworks",
       ],
     },
     challenges: {
-      es: "Implementar el chat en tiempo real utilizando tecnologías estándar sin frameworks modernos.",
-      en: "Implementing real-time chat using standard technologies without modern frameworks.",
+      es: "Implementar un sistema de chat en tiempo real funcional utilizando únicamente JavaScript Vanilla y PHP, gestionando el polling y el estado del DOM sin depender de librerías externas. Además, crear un diseño responsive complejo usando solo CSS puro.",
+      en: "Implementing a functional real-time chat system using only Vanilla JavaScript and PHP, managing polling and DOM state without relying on external libraries. Also, creating a complex responsive design using only pure CSS.",
     },
     learnings: {
-      es: "Profundicé en el ciclo de vida de las peticiones HTTP y la gestión de sesiones en PHP.",
-      en: "Deepened my understanding of HTTP request lifecycles and PHP session management.",
+      es: "Dominio profundo de la manipulación asíncrona del DOM y optimización de consultas SQL complejas (JOINS) para las relaciones sociales (Amistades/Posts).",
+      en: "Deep mastery of asynchronous DOM manipulation and optimization of complex SQL queries (JOINS) for social relationships (Friendships/Posts).",
     },
   },
   {
     id: "buhlandco",
-    title: "BuhlandCo Swiss Rentals",
+    title: "Buhl And Co Swiss Rentals",
     description: {
-      es: "Landing page corporativa para gestión de alquileres vacacionales en Suiza.",
-      en: "Corporate landing page for vacation rental management in Switzerland.",
+      es: "Experiencia web corporativa de alto rendimiento con diseño suizo minimalista e internacionalización.",
+      en: "High-performance corporate web experience with minimalist Swiss design and internationalization.",
     },
-    tags: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
+    tags: ["HTML5", "CSS3", "JavaScript", "i18n", "Animations"],
     image: buhlandcoImage,
     contentImage: buhlandcoContent,
     gallery: [buhlandcoContent2, buhlandcoContent3, buhlandcoContent4],
@@ -141,25 +141,24 @@ export const projects: Project[] = [
     repo: "https://github.com/CrankierDev/buhlandco-landing-page",
     features: {
       es: [
-        "Diseño Responsive",
-        "Multi-idioma",
-        "Animaciones CSS",
-        "Formulario de contacto",
+        "Internacionalización JSON (ES/EN/DE)",
+        "Animaciones complejas por Keyframes",
+        "Diseño UI/UX a medida del cliente",
       ],
       en: [
-        "Responsive Design",
-        "Multi-language",
-        "CSS Animations",
-        "Contact Form",
+        "JSON Internationalization (ES/EN/DE)",
+        "Complex Keyframe Animations",
+        "Asset Optimization (Core Web Vitals)",
+        "Custom Client UI/UX Design",
       ],
     },
     challenges: {
-      es: "Asegurar la compatibilidad perfecta y el rendimiento en todos los dispositivos móviles.",
-      en: "Ensuring perfect compatibility and performance across all mobile devices.",
+      es: "El desafío visual principal fue la animación del logotipo: debía transicionar fluidamente desde el cuerpo de la página hasta incrustarse en la barra de navegación al hacer scroll, requiriendo cálculos precisos de Keyframes y manejo de eventos de scroll.",
+      en: "The main visual challenge was the logo animation: it had to transition fluidly from the page body to embed itself into the navigation bar upon scrolling, requiring precise Keyframe calculations and scroll event handling.",
     },
     learnings: {
-      es: "Mejoré mis habilidades en CSS avanzado y optimización de assets para web.",
-      en: "Improved my skills in advanced CSS and web asset optimization.",
+      es: "Perfeccioné la arquitectura CSS para animaciones de alto rendimiento y desarrollé un sistema ligero de gestión de idiomas basado en JSON para evitar sobrecarga en el servidor.",
+      en: "I perfected CSS architecture for high-performance animations and developed a lightweight JSON-based language management system to avoid server overhead.",
     },
   },
 ];
