@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Props {
   lang: string;
@@ -13,6 +13,29 @@ interface Props {
 
 export default function Navbar({ lang, labels }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [languageSwitchHref, setLanguageSwitchHref] = useState("/");
+
+  useEffect(() => {
+    // Obtener la ruta actual del navegador
+    const currentPath = window.location.pathname;
+
+    // Detectar si estamos en una página de proyecto: /es/projects/id o /en/projects/id
+    const projectMatch = currentPath.match(/^\/(es|en)\/projects\/(.+)$/);
+
+    if (projectMatch) {
+      // Estamos en un proyecto, cambiar solo el idioma pero mantener el ID
+      const projectId = projectMatch[2];
+      const newLang = lang === "es" ? "en" : "es";
+      setLanguageSwitchHref(`/${newLang}/projects/${projectId}`);
+    } else {
+      // Estamos en la homepage u otra página, cambiar solo el idioma base
+      const newLang = lang === "es" ? "en" : "es";
+
+      // Mantener el hash si existe (por ejemplo #about, #projects)
+      const hash = window.location.hash;
+      setLanguageSwitchHref(`/${newLang}${hash}`);
+    }
+  }, [lang]);
 
   const navigationLinks = [
     { name: labels.home, href: `/${lang}#home` },
@@ -22,14 +45,12 @@ export default function Navbar({ lang, labels }: Props) {
     { name: labels.projects, href: `/${lang}#projects` },
   ];
 
-  const languageSwitchHref = lang === "es" ? "/en" : "/es";
   const languageSwitchLabel = lang === "es" ? "EN" : "ES";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-slate-950/90 px-4 py-4 backdrop-blur-xl transition-all duration-300">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
         <a href={`/${lang}`} className="flex items-center gap-2 group">
-          {/* CAMBIO AQUÍ: from-purple-600 to-blue-500 */}
           <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-purple-600 to-blue-500 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
             JP
           </div>
@@ -91,7 +112,7 @@ export default function Navbar({ lang, labels }: Props) {
       </div>
 
       {isMenuOpen && (
-        <nav className="absolute top-full left-0 w-full bg-slate-950 border-b border-slate-800 p-4 md:hidden flex flex-col gap-2 shadow-xl">
+        <nav className="absolute top-full left-0 w-full bg-slate-950 border-b border-slate-800 p-4 lg:hidden flex flex-col gap-2 shadow-xl">
           {navigationLinks.map((link) => (
             <a
               key={link.name}
