@@ -1,3 +1,51 @@
 ---
-return Astro.redirect('/es');
+// src/pages/index.astro
+// IMPORTANTE: Ahora este archivo renderiza la web en ESPAÑOL por defecto.
+
+import BaseLayout from '@/components/layout/BaseLayout.astro';
+import Navbar from '@/components/shared/Navbar';
+import Hero from '@/components/landing/Hero.astro';
+import About from '@/components/landing/About.astro';
+import Skills from '@/components/landing/Skills.astro';
+import Qualification from '@/components/landing/Qualification.astro';
+import Projects from '@/components/landing/Projects.astro';
+import Contact from '@/components/landing/Contact.astro';
+import Footer from '@/components/shared/Footer.astro';
+
+import { ui, defaultLang } from '@/i18n/ui';
+
+// 1. FORZAMOS EL IDIOMA A ESPAÑOL
+const lang = 'es';
+
+// 2. Helper de traducción (fijado a 'es')
+const t = (key: string) => {
+    // @ts-ignore
+    return ui[lang]?.[key] || ui[defaultLang][key];
+}
+
+// 3. Datos del Navbar
+const navLabels = {
+    home: t('nav.home'),
+    about: t('nav.about'),
+    skills: t('nav.skills'),
+    experience: t('nav.experience'),
+    projects: t('nav.projects'),
+};
 ---
+
+<BaseLayout title="Juanpe | Full Stack Portfolio" lang={lang}>
+  
+  <Navbar client:load lang={lang} labels={navLabels} />
+  
+  <main>
+    <Hero t={t} lang={lang} />
+    <About t={t} lang={lang} />
+    <Skills t={t} />
+    <Qualification t={t} lang={lang} />
+    <Projects t={t} lang={lang} />
+    <Contact t={t} />
+  </main>
+  
+  <Footer t={t} lang={lang} />
+
+</BaseLayout>
