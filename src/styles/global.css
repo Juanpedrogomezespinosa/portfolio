@@ -1,38 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colores de Acento (Compartidos) */
   --color-primary-600: #2563eb;
   --color-primary-500: #3b82f6;
 }
 
 /* VARIABLES SEMÁNTICAS */
 :root {
-  /* --- PALETA MODO CLARO (Clean & Professional) --- */
-  --bg-body: #f8fafc; /* Slate-50: Fondo general muy suave */
-  --bg-card: #ffffff; /* Blanco: Para tarjetas y secciones destacadas */
-  --bg-input: #ffffff; /* Fondo de inputs */
+  /* --- MODO CLARO --- */
+  --bg-body: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
 
-  --text-main: #0f172a; /* Slate-900: Negro azulado para títulos */
-  --text-body: #475569; /* Slate-600: Gris oscuro para párrafos */
-  --text-muted: #94a3b8; /* Slate-400: Gris claro para detalles */
+  --text-main: #0f172a; /* Slate-900 */
+  --text-body: #334155; /* Slate-700 */
+  --text-muted: #64748b; /* Slate-500 */
 
-  --border-color: #e2e8f0; /* Slate-200: Bordes sutiles */
-  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1); /* Sombra suave */
+  --border-color: #e2e8f0; /* Slate-200 */
+  --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
 .dark {
-  /* --- PALETA MODO OSCURO (Cosmic Neon) --- */
-  --bg-body: #020617; /* Negro Azulado Profundo */
-  --bg-card: #0f172a; /* Azul muy oscuro para tarjetas */
-  --bg-input: #1e293b; /* Slate-800 */
+  /* --- MODO OSCURO --- */
+  --bg-body: #020617;
+  --bg-card: #0f172a;
+  --bg-input: #1e293b;
 
-  --text-main: #f8fafc; /* Casi blanco */
-  --text-body: #cbd5e1; /* Slate-300 */
-  --text-muted: #64748b; /* Slate-500 */
+  --text-main: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #64748b;
 
-  --border-color: #1e293b; /* Slate-800 */
-  --shadow-card: none; /* Sin sombra en dark mode (o glow opcional) */
+  --border-color: #1e293b;
+  --shadow-card: none;
 }
 
 html {
@@ -41,16 +40,11 @@ html {
 
 body {
   @apply transition-colors duration-300 min-h-screen;
-
-  /* Aplicamos las variables */
   background-color: var(--bg-body);
   color: var(--text-main);
-
-  /* Reset de fondo para modo claro */
   background-image: none;
 }
 
-/* MODO OSCURO: Aplicamos el efecto Nebulosa solo aquí */
 :is(.dark body) {
   background-image: radial-gradient(
       ellipse 80% 60% at 50% -20%,
@@ -62,7 +56,6 @@ body {
   background-size: 100% 100%;
 }
 
-/* CLASE UTILITARIA: Tarjetas Estándar */
 .card-base {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -70,7 +63,30 @@ body {
   @apply rounded-2xl transition-all duration-300;
 }
 
-/* Scrollbar */
+/* --- ANIMACIONES REVEAL --- */
+/* Estado inicial: invisible y desplazado */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+/* Estado final: visible (se activa con JS) */
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-100 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-200 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-300 {
+  transition-delay: 0.3s;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

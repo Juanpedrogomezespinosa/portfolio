@@ -1,6 +1,5 @@
 ---
 import '@/styles/global.css';
-// 1. Importamos el Router de Cliente
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -25,7 +24,7 @@ const {
     <link rel="icon" type="image/ico" href="/favicon_io/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-
+    
     <ClientRouter />
 
     <script is:inline>
@@ -51,5 +50,31 @@ const {
     <div class="relative flex flex-col min-h-screen overflow-hidden">
         <slot />
     </div>
+
+    <script>
+      const initReveal = () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.1 
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach((el) => observer.observe(el));
+      };
+
+      // Ejecutar al cargar y al navegar
+      initReveal();
+      document.addEventListener('astro:page-load', initReveal);
+    </script>
   </body>
 </html>

@@ -12,15 +12,15 @@ const { t, lang } = Astro.props;
 
 <section id="projects" class="py-20 px-4">
     <div class="max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-16">{t('projects.title')}</h2>
+        <h2 class="text-3xl font-bold text-center text-slate-900 dark:text-white mb-16 reveal">{t('projects.title')}</h2>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((p) => (
-                // 1. IMPORTANTE: La clase 'relative' aquí es vital. 
-                // Define el límite hasta donde se estirará el enlace.
-                <article class="group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 flex flex-col h-full">
+            {projects.map((p, index) => (
+                <article 
+                    class={`group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 flex flex-col h-full reveal`}
+                    style={`transition-delay: ${index * 100}ms`}
+                >
                     
-                    {/* Imagen con efecto zoom */}
                     <div class="h-52 w-full overflow-hidden bg-slate-200 dark:bg-slate-800 relative">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-60 group-hover:opacity-40 transition-opacity z-10"></div>
                         <Image 
@@ -33,13 +33,10 @@ const { t, lang } = Astro.props;
                     </div>
 
                     <div class="p-6 flex flex-col flex-1 relative">
-                        
-                        {/* Título */}
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-blue-500 transition-colors">
                             {p.title}
                         </h3>
 
-                        {/* Tags */}
                         <div class="flex flex-wrap gap-2 mb-6">
                             {p.tags.map(tag => (
                                 <span class="text-[11px] font-medium px-2.5 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 rounded-md border border-blue-200 dark:border-blue-800">
@@ -48,15 +45,10 @@ const { t, lang } = Astro.props;
                             ))}
                         </div>
                         
-                        {/* Descripción */}
                         <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 line-clamp-3 flex-1 leading-relaxed">
                             {lang === 'es' ? p.description.es : p.description.en}
                         </p>
 
-                        {/* 2. EL TRUCO MAESTRO:
-                           He añadido 'before:absolute before:inset-0 before:z-10'
-                           Esto crea una capa invisible que sale de este botón y cubre todo el <article> padre.
-                        */}
                         <a href={`/${lang}/projects/${p.id}`} class="mt-auto inline-flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors group/link before:absolute before:inset-0 before:z-10">
                             {t('projects.view')} 
                             <svg class="w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
