@@ -1,9 +1,13 @@
 ---
-// src/pages/index.astro
-// Fallback: Si Vercel no redirige, el navegador lo hará.
+// Si Vercel falla o en desarrollo local, esto hará el trabajo.
+return Astro.redirect('/es');
 ---
+
 <!DOCTYPE html>
-<meta charset="utf-8">
-<title>Redirecting...</title>
-<meta http-equiv="refresh" content="0;url=/es">
-<script>location.href="/es"</script>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0;url=/es" />
+  </head>
+  <body>
+  </body>
+</html>

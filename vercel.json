@@ -3,7 +3,7 @@
     {
       "source": "/",
       "destination": "/es",
-      "permanent": true
+      "permanent": false
     }
   ]
 }
