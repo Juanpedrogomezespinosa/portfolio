@@ -65,6 +65,7 @@ export const projects: Project[] = [
       footerContent8,
       footerContent9,
     ],
+    link: "https://footer-shop.vercel.app",
     repo: "https://github.com/Juanpedrogomezespinosa/footer-front",
     repoBack: "https://github.com/Juanpedrogomezespinosa/footer-back",
     features: {

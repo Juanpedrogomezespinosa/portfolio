@@ -87,7 +87,8 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                     </div>
                 </div>
 
-                <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-800 bg-black group" id="zoom-container">
+                {/* Añadimos touch-action-pan-y para mejorar el comportamiento en móvil */}
+                <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-800 bg-black group touch-pan-y" id="zoom-container">
                     
                     {/* Imagen Principal - key único por proyecto */}
                     <img 
@@ -348,7 +349,49 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 updateAllViews(newIndex);
             }
 
-            // 5️⃣ EVENT HANDLERS
+            // 5️⃣ BIS - GESTOS TÁCTILES (SWIPE)
+            // Variables para almacenar las coordenadas del toque
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchEndX = 0;
+            let touchEndY = 0;
+            const minSwipeDistance = 50; // Distancia mínima en píxeles para considerar un swipe
+
+            const onTouchStart = (e: TouchEvent) => {
+                // Guardamos donde empieza el toque
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            };
+
+            const onTouchEnd = (e: TouchEvent) => {
+                // Guardamos donde termina el toque (changedTouches porque el toque ya no está activo)
+                touchEndX = e.changedTouches[0].clientX;
+                touchEndY = e.changedTouches[0].clientY;
+                detectSwipe();
+            };
+
+            const detectSwipe = () => {
+                const diffX = touchEndX - touchStartX;
+                const diffY = touchEndY - touchStartY;
+
+                // Comprobamos si el movimiento es más horizontal que vertical
+                // Esto evita que se active el swipe cuando el usuario hace scroll en la página
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // Si la distancia supera el umbral mínimo
+                    if (Math.abs(diffX) > minSwipeDistance) {
+                        if (diffX > 0) {
+                            // Swipe a la derecha -> Imagen anterior
+                            navigate(-1);
+                        } else {
+                            // Swipe a la izquierda -> Imagen siguiente
+                            navigate(1);
+                        }
+                    }
+                }
+            }
+
+
+            // 6️⃣ EVENT HANDLERS
             const handlePrevClick = (e: Event) => { 
                 e.stopPropagation(); 
                 navigate(-1); 
@@ -360,7 +403,9 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             };
 
             const handleZoomClick = (e: Event) => {
+                // Si el click proviene de los botones de navegación, no hacemos zoom
                 if ((e.target as HTMLElement).closest('button')) return;
+                
                 if(lightboxImg) lightboxImg.src = images[currentIndex];
                 lightbox?.classList.remove('hidden');
                 lightbox?.classList.add('flex');
@@ -395,10 +440,20 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 if(e.target === lightbox) closeBox();
             };
 
-            // 6️⃣ ASIGNAR EVENTOS
+            // 7️⃣ ASIGNAR EVENTOS
             prevBtn?.addEventListener('click', handlePrevClick as EventListener);
             nextBtn?.addEventListener('click', handleNextClick as EventListener);
+            
+            // Eventos para el contenedor principal (Zoom click y Swipe touch)
             zoomContainer?.addEventListener('click', handleZoomClick as EventListener);
+            zoomContainer?.addEventListener('touchstart', onTouchStart as EventListener, { passive: true });
+            zoomContainer?.addEventListener('touchend', onTouchEnd as EventListener);
+
+            // Eventos para el LIGHTBOX (Swipe touch) - AÑADIDO AQUÍ
+            lightbox?.addEventListener('touchstart', onTouchStart as EventListener, { passive: true });
+            lightbox?.addEventListener('touchend', onTouchEnd as EventListener);
+
+
             closeLightbox?.addEventListener('click', closeBox);
             lightboxPrev?.addEventListener('click', ((e: Event) => { e.stopPropagation(); navigate(-1); }) as EventListener);
             lightboxNext?.addEventListener('click', ((e: Event) => { e.stopPropagation(); navigate(1); }) as EventListener);
@@ -414,12 +469,22 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
 
             console.log('✅ Galería inicializada correctamente');
 
-            // 7️⃣ FUNCIÓN DE LIMPIEZA
+            // 8️⃣ FUNCIÓN DE LIMPIEZA
             galleryCleanup = () => {
                 console.log('🧹 Ejecutando cleanup...');
                 prevBtn?.removeEventListener('click', handlePrevClick as EventListener);
                 nextBtn?.removeEventListener('click', handleNextClick as EventListener);
+                
+                // Limpiamos eventos del contenedor principal
                 zoomContainer?.removeEventListener('click', handleZoomClick as EventListener);
+                zoomContainer?.removeEventListener('touchstart', onTouchStart as EventListener);
+                zoomContainer?.removeEventListener('touchend', onTouchEnd as EventListener);
+
+                // Limpiamos eventos del LIGHTBOX - AÑADIDO AQUÍ
+                lightbox?.removeEventListener('touchstart', onTouchStart as EventListener);
+                lightbox?.removeEventListener('touchend', onTouchEnd as EventListener);
+
+
                 closeLightbox?.removeEventListener('click', closeBox);
                 lightbox?.removeEventListener('click', handleLightboxBgClick as EventListener);
                 document.removeEventListener('keydown', handleKeyDown);
@@ -434,7 +499,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             };
         }
 
-        // 8️⃣ EVENTOS DEL CICLO DE VIDA DE ASTRO
+        // 9️⃣ EVENTOS DEL CICLO DE VIDA DE ASTRO
         
         // Primera carga
         initGallery();
