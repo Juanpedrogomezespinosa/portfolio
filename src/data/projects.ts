@@ -1,8 +1,10 @@
 import type { ImageMetadata } from "astro";
+
 // Portadas
 import footerImage from "@/assets/footer-portada.png";
 import cinevaImage from "@/assets/cineva-portada.png";
 import buhlandcoImage from "@/assets/buhlandco-portada.png";
+import cdjPortada from "@/assets/cdj-portada.jpeg";
 
 // Contenido Footer
 import footerContent from "@/assets/footer-content.png";
@@ -27,6 +29,14 @@ import buhlandcoContent2 from "@/assets/buhlandco-content-2.png";
 import buhlandcoContent3 from "@/assets/buhlandco-content-3.png";
 import buhlandcoContent4 from "@/assets/buhlandco-content-4.png";
 
+// Contenido Camel & DJ Juanpe
+import cdjContent from "@/assets/cdj-content-1.png";
+import cdjContent2 from "@/assets/cdj-content-2.png";
+import cdjContent3 from "@/assets/cdj-content-3.png";
+import cdjContent4 from "@/assets/cdj-content-4.png";
+import cdjContent5 from "@/assets/cdj-content-5.png";
+import cdjContent6 from "@/assets/cdj-content-6.png";
+
 export interface Project {
   id: string;
   title: string;
@@ -38,7 +48,6 @@ export interface Project {
   link?: string;
   repo?: string;
   repoBack?: string;
-  // Campos extendidos para narrativa Senior
   features?: { es: string[]; en: string[] };
   challenges?: { es: string; en: string };
   learnings?: { es: string; en: string };
@@ -92,13 +101,49 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "camel-dj-juanpe",
+    title: "Camel & DJ Juanpe",
+    description: {
+      es: "Sitio web oficial para el dúo musical Camel & DJ Juanpe. Una experiencia inmersiva con estética urbana que centraliza discografía, videoclips y gestión de eventos.",
+      en: "Official website for the musical duo Camel & DJ Juanpe. An immersive experience with urban aesthetics that centralizes discography, music videos, and event management.",
+    },
+    tags: ["Astro", "React", "Tailwind CSS", "Cloudflare", "Brevo"],
+    image: cdjPortada,
+    contentImage: cdjContent,
+    gallery: [cdjContent2, cdjContent3, cdjContent4, cdjContent5, cdjContent6],
+    link: "https://camel-dj-juanpe.vercel.app",
+    repo: "https://github.com/Juanpedrogomezespinosa/camel-dj-juanpe",
+    features: {
+      es: [
+        "Streaming y descarga de audio optimizada (Cloudflare)",
+        "Reproductores de Audio/Video propios (Custom Hooks)",
+        "Newsletter (Brevo) y Contacto automático (EmailJS)",
+        "Sistema de Gira con fechas y enlaces a plataformas",
+      ],
+      en: [
+        "Optimized audio streaming & download (Cloudflare)",
+        "Custom-built Audio/Video players (Custom Hooks)",
+        "Newsletter (Brevo) & Auto-contact (EmailJS)",
+        "Tour System with dates and platform links",
+      ],
+    },
+    challenges: {
+      es: "El reto técnico principal fue desarrollar reproductores multimedia personalizados desde cero para tener control total sobre la UI y el estado, sin depender de librerías externas. Además, integrar la entrega de contenido pesado (música/vídeo) mediante Cloudflare garantizando una latencia mínima y una experiencia fluida en cualquier dispositivo.",
+      en: "The main technical challenge was developing custom media players from scratch to have full control over UI and state, without relying on external libraries. Additionally, integrating heavy content delivery (music/video) via Cloudflare while ensuring minimal latency and a smooth experience on any device.",
+    },
+    learnings: {
+      es: "Profundicé en el manejo de la API HTMLMediaElement y la gestión de streams de datos. Aprendí a orquestar servicios de terceros (BaaS) como Brevo y EmailJS dentro de una arquitectura estática, logrando una web totalmente funcional e interactiva sin necesidad de mantener un backend complejo.",
+      en: "I deepened my understanding of the HTMLMediaElement API and data stream management. I learned to orchestrate third-party services (BaaS) like Brevo and EmailJS within a static architecture, achieving a fully functional and interactive website without the need to maintain a complex backend.",
+    },
+  },
+  {
     id: "cineva",
     title: "Cineva",
     description: {
       es: "Red social vertical para cinéfilos desarrollada con arquitectura PHP nativa y lógica asíncrona avanzada.",
       en: "Vertical social network for film buffs developed with native PHP architecture and advanced asynchronous logic.",
     },
-    tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3", "Vanilla JS"],
+    tags: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3"],
     image: cinevaImage,
     contentImage: cinevaContent,
     gallery: [cinevaContent2, cinevaContent3, cinevaContent4],
@@ -106,13 +151,13 @@ export const projects: Project[] = [
     repo: "https://github.com/Juanpedrogomezespinosa/cineva",
     features: {
       es: [
-        "Chat en tiempo real (Lógica JS personalizada)",
+        "Chat en tiempo real (Lógica JavaScript personalizada)",
         "Feed Social (Likes, Comentarios, Amigos)",
         "Buscador dinámico de películas",
         "Diseño CSS puro sin frameworks",
       ],
       en: [
-        "Real-time Chat (Custom JS Logic)",
+        "Real-time Chat (Custom JavaScript Logic)",
         "Social Feed (Likes, Comments, Friends)",
         "Dynamic Movie Search",
         "Pure CSS Design without frameworks",
@@ -145,12 +190,13 @@ export const projects: Project[] = [
         "Internacionalización JSON (ES/EN/DE)",
         "Animaciones complejas por Keyframes",
         "Diseño UI/UX a medida del cliente",
+        "Optimización de activos (Core Web Vitals)",
       ],
       en: [
         "JSON Internationalization (ES/EN/DE)",
         "Complex Keyframe Animations",
-        "Asset Optimization (Core Web Vitals)",
         "Custom Client UI/UX Design",
+        "Asset Optimization (Core Web Vitals)",
       ],
     },
     challenges: {
