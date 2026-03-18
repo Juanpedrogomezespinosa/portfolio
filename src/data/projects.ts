@@ -1,10 +1,17 @@
 import type { ImageMetadata } from "astro";
 
 // Portadas
-import footerImage from "@/assets/footer-portada.png";
-import cinevaImage from "@/assets/cineva-portada.png";
-import buhlandcoImage from "@/assets/buhlandco-portada.png";
+import qualisophyPortada from "@/assets/qualisophy-portada.jpeg";
+import footerImage from "@/assets/footer-portada.jpeg";
+import cinevaImage from "@/assets/cineva-portada.jpeg";
+import buhlandcoImage from "@/assets/buhlandco-portada.jpeg";
 import cdjPortada from "@/assets/cdj-portada.jpeg";
+
+// Contenido Qualisophy
+import qualisophyContent from "@/assets/qualisophy-content.png";
+import qualisophyContent2 from "@/assets/qualisophy-content-2.png";
+import qualisophyContent3 from "@/assets/qualisophy-content-3.png";
+import qualisophyContent4 from "@/assets/qualisophy-content-4.png";
 
 // Contenido Footer
 import footerContent from "@/assets/footer-content.png";
@@ -54,6 +61,43 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: "qualisophy-web",
+    title: "Qualisophy",
+    description: {
+      es: "Sitio web corporativo e-learning para centro de formación tecnológica en Málaga. Plataforma orientada a la empleabilidad con catálogo dinámico y automatizaciones avanzadas.",
+      en: "Corporate e-learning website for a tech training center in Malaga. An employability-focused platform with a dynamic catalog and advanced automations.",
+    },
+    tags: ["Astro", "React", "Tailwind CSS", "Make", "Abstract API", "Brevo"],
+    image: qualisophyPortada,
+    contentImage: qualisophyContent,
+    gallery: [qualisophyContent2, qualisophyContent3, qualisophyContent4],
+    link: "https://www.qualisophy.com/",
+    features: {
+      es: [
+        "Diseño y desarrollo web integral (UI/UX a medida)",
+        "Catálogo de cursos y Blog con barra de búsqueda y filtros dinámicos",
+        "Validación de emails en tiempo real anti-spam (Abstract API)",
+        "Enrutamiento dinámico de formularios (Contacto, Partners, Cursos)",
+        "Automatización de base de datos en Excel y Newsletter (Make + Brevo)",
+      ],
+      en: [
+        "End-to-end web design and development (Custom UI/UX)",
+        "Course catalog and Blog with search bar and dynamic filters",
+        "Real-time anti-spam email validation (Abstract API)",
+        "Dynamic form routing (Contact, Partners, Courses)",
+        "Excel database automation and Newsletter integration (Make + Brevo)",
+      ],
+    },
+    challenges: {
+      es: "El principal reto técnico fue orquestar toda la lógica de negocio sin un servidor backend tradicional. Diseñé un flujo automatizado complejo con Make que intercepta los envíos, valida la veracidad del correo mediante Abstract API, detecta la URL de origen para clasificar la solicitud y registra los datos organizados automáticamente en una base de datos de Excel.",
+      en: "The main technical challenge was orchestrating all business logic without a traditional backend server. I designed a complex automated workflow with Make that intercepts submissions, validates email authenticity via Abstract API, detects the origin URL to categorize the request, and automatically logs organized data into an Excel database.",
+    },
+    learnings: {
+      es: "Perfeccioné la arquitectura de sitios estáticos integrando servicios BaaS (Backend as a Service). Aprendí a construir flujos de trabajo (Webhooks) robustos y a implementar lógica de filtrado compleja en el lado del cliente usando React dentro del ecosistema de Astro.",
+      en: "I perfected static site architecture by integrating BaaS (Backend as a Service) solutions. I learned to build robust workflows (Webhooks) and implement complex client-side filtering logic using React within the Astro ecosystem.",
+    },
+  },
   {
     id: "footer-ecommerce",
     title: "Footer",
