@@ -1,11 +1,19 @@
 import type { ImageMetadata } from "astro";
 
 // Portadas
+import quarkTechieImage from "@/assets/quark-techie.png";
 import qualisophyPortada from "@/assets/qualisophy-portada.jpeg";
 import footerImage from "@/assets/footer-portada.jpeg";
 import cinevaImage from "@/assets/cineva-portada.jpeg";
 import buhlandcoImage from "@/assets/buhlandco-portada.jpeg";
 import cdjPortada from "@/assets/cdj-portada.jpeg";
+
+// Contenido Quark Techie
+import quarkTechieContent from "@/assets/quark-techie-content.png";
+import quarkTechieContent2 from "@/assets/quark-techie-content-2.png";
+import quarkTechieContent4 from "@/assets/quark-techie-content-4.png";
+import quarkTechieContent5 from "@/assets/quark-techie-content-5.png";
+import quarkTechieContent6 from "@/assets/quark-techie-content-6.png";
 
 // Contenido Qualisophy
 import qualisophyContent from "@/assets/qualisophy-content.png";
@@ -58,9 +66,82 @@ export interface Project {
   features?: { es: string[]; en: string[] };
   challenges?: { es: string; en: string };
   learnings?: { es: string; en: string };
+  role?: { es: string[]; en: string[] }; // Añadido el nuevo campo
 }
 
 export const projects: Project[] = [
+  {
+    id: "quark-techie",
+    title: "Quark Techie",
+    description: {
+      es: "Landing corporativa de alto impacto para Quark Techie, consultora tecnológica especializada en desarrollo de software, talento IT y consultoría. Identidad visual premium inspirada en el ecosistema Apple, combinando glassmorphism y microinteracciones.",
+      en: "High-impact corporate landing page for Quark Techie, a tech consultancy specializing in software development, IT talent, and consulting. Premium visual identity inspired by the Apple ecosystem, combining glassmorphism and micro-interactions.",
+    },
+    tags: [
+      "Astro",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Make",
+    ],
+    image: quarkTechieImage,
+    contentImage: quarkTechieContent,
+    gallery: [
+      quarkTechieContent2,
+      quarkTechieContent4,
+      quarkTechieContent5,
+      quarkTechieContent6,
+    ],
+    features: {
+      es: [
+        "Diseño y desarrollo web integral (UI/UX personalizada)",
+        "Estética Glassmorphism con inspiración en Apple",
+        "Landing multipágina optimizada para conversión",
+        "Catálogo de soluciones con búsqueda y filtros dinámicos",
+        "Formularios de contacto automatizados mediante Make",
+        "Gestión del consentimiento de cookies con CookieYes",
+        "Arquitectura responsive optimizada para escritorio, tablet y móvil",
+      ],
+      en: [
+        "End-to-end web design and development (Custom UI/UX)",
+        "Apple-inspired Glassmorphism aesthetics",
+        "Conversion-optimized multi-page landing",
+        "Solutions catalog with dynamic search and filters",
+        "Automated contact forms via Make",
+        "Cookie consent management with CookieYes",
+        "Responsive architecture optimized for desktop, tablet, and mobile",
+      ],
+    },
+    challenges: {
+      es: "El mayor reto fue trasladar una identidad visual muy cuidada a una aplicación web manteniendo un excelente rendimiento. Desarrollé una arquitectura basada en componentes reutilizables, optimizando efectos visuales (transparencias, desenfoques, animaciones) sin comprometer la carga. Además, automaticé el flujo de contacto mediante Make para centralizar solicitudes sin necesidad de un backend tradicional. A nivel de dinámica de trabajo, el reto fue colaborar y organizar a un grupo de desarrollo en prácticas, asegurando la coherencia técnica del producto.",
+      en: "The biggest challenge was translating a highly refined visual identity into a web app while maintaining excellent performance. I developed a reusable component architecture, optimizing visual effects without compromising load speed. I also automated the contact flow using Make to centralize requests without a traditional backend. On a workflow level, the challenge was collaborating with and organizing an intern development group, ensuring the technical consistency of the product.",
+    },
+    learnings: {
+      es: "Este proyecto supuso un paso importante en mi evolución como desarrollador. Descubrí que enseñar y acompañar a otros desarrolladores no solo mejora el resultado conjunto, sino que también refuerza enormemente el propio conocimiento al explicar decisiones de arquitectura y revisar código. También perfeccioné la construcción de interfaces premium, equilibrando diseño, rendimiento y UX.",
+      en: "This project was a significant step in my evolution as a developer. I discovered that teaching and supporting other developers not only improves the overall result but also greatly reinforces one's own knowledge when explaining architectural decisions and reviewing code. I also perfected building premium interfaces, balancing design, performance, and UX.",
+    },
+    role: {
+      es: [
+        "Diseño de la arquitectura Frontend.",
+        "Desarrollo de la interfaz completa.",
+        "Apoyo y mentoría a desarrolladores en prácticas.",
+        "Revisión de código (Code Review).",
+        "Organización y reparto de tareas.",
+        "Integración de automatizaciones con Make.",
+        "Despliegue y puesta en producción.",
+      ],
+      en: [
+        "Frontend architecture design.",
+        "Full interface development.",
+        "Support and mentoring for intern developers.",
+        "Code Review.",
+        "Task organization and distribution.",
+        "Make automation integration.",
+        "Deployment and production setup.",
+      ],
+    },
+  },
   {
     id: "qualisophy-web",
     title: "Qualisophy",

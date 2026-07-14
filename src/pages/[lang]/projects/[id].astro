@@ -43,6 +43,7 @@ const description = lang === 'es' ? project.description.es : project.description
 const challenges = project.challenges ? (lang === 'es' ? project.challenges.es : project.challenges.en) : '';
 const learnings = project.learnings ? (lang === 'es' ? project.learnings.es : project.learnings.en) : '';
 const features = project.features ? (lang === 'es' ? project.features.es : project.features.en) : [];
+const role = project.role ? (lang === 'es' ? project.role.es : project.role.en) : [];
 
 const allImages = [project.contentImage, ...(project.gallery || [])];
 
@@ -87,10 +88,9 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                     </div>
                 </div>
 
-                {/* Añadimos touch-action-pan-y para mejorar el comportamiento en móvil */}
-                <div class="relative aspect-video lg:flex-1 lg:aspect-auto rounded-xl overflow-hidden border border-slate-800 bg-black group touch-pan-y" id="zoom-container">
+                {/* Contenedor sin lg:flex-1 ni lg:aspect-auto para que todos los proyectos mantengan su ratio 16:9 */}
+                <div class="relative aspect-video rounded-xl overflow-hidden border border-slate-800 bg-black group touch-pan-y" id="zoom-container">
                     
-                    {/* Imagen Principal - key único por proyecto */}
                     <img 
                         id="main-display"
                         src={allImages[0].src} 
@@ -99,12 +99,10 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                         class="w-full h-full object-contain transition-opacity duration-300 cursor-zoom-in" 
                     />
                     
-                    {/* Botón Anterior - Visible en móvil */}
                     <button id="prev-btn" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/70 text-white/90 hover:text-white hover:bg-blue-600 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
                         <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                     </button>
                     
-                    {/* Botón Siguiente - Visible en móvil */}
                     <button id="next-btn" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-black/70 text-white/90 hover:text-white hover:bg-blue-600 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20 focus:outline-none focus:opacity-100">
                         <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                     </button>
@@ -149,7 +147,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 <div class="p-6 pt-0 lg:overflow-y-auto space-y-8 flex-1 custom-scroll">
                     
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2">Descripción</h3>
+                        <h3 class="text-lg font-bold text-white mb-2">{lang === 'es' ? 'Descripción' : 'Description'}</h3>
                         <p class="text-slate-300 leading-relaxed text-sm">
                             {description}
                         </p>
@@ -158,7 +156,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                     {features.length > 0 && (
                         <div>
                             <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span class="text-blue-500">⚡</span> Funcionalidades
+                                <span class="text-blue-500">⚡</span> {lang === 'es' ? 'Funcionalidades' : 'Features'}
                             </h3>
                             <ul class="grid grid-cols-1 gap-2">
                                 {features.map((feat: string) => (
@@ -171,10 +169,29 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                         </div>
                     )}
 
+                    {role.length > 0 && (
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                <span class="text-purple-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                </span> 
+                                {lang === 'es' ? 'Mi papel en el proyecto' : 'My Role in the Project'}
+                            </h3>
+                            <ul class="grid grid-cols-1 gap-2 bg-purple-900/10 border border-purple-900/30 p-4 rounded-lg">
+                                {role.map((r: string) => (
+                                    <li class="flex items-start gap-2 text-sm text-slate-300">
+                                        <svg class="w-4 h-4 text-purple-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>{r}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+
                     {challenges && (
                         <div>
                             <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                                <span class="text-red-500">🔥</span> Retos y Soluciones
+                                <span class="text-red-500">🔥</span> {lang === 'es' ? 'Retos y Soluciones' : 'Challenges & Solutions'}
                             </h3>
                             <div class="text-sm text-slate-300 bg-red-900/10 border border-red-900/30 p-4 rounded-lg">
                                 {challenges}
@@ -185,7 +202,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                     {learnings && (
                         <div>
                             <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                                <span class="text-green-500">💡</span> Aprendizajes
+                                <span class="text-green-500">💡</span> {lang === 'es' ? 'Aprendizajes' : 'Learnings'}
                             </h3>
                             <div class="text-sm text-slate-300 bg-green-900/10 border border-green-900/30 p-4 rounded-lg">
                                 {learnings}
@@ -225,7 +242,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             </div>
         </div>
 
-        {/* Lightbox - Optimizado para Safari móvil */}
+        {/* Lightbox */}
         <div id="lightbox" class="fixed inset-0 z-[9999] bg-black/95 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300 backdrop-blur-sm select-none touch-none">
             <button id="close-lightbox" class="absolute top-6 right-6 text-white/70 hover:text-white p-2 transition-colors bg-black/50 rounded-full z-[10000]">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -244,39 +261,23 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
     </main>
 
     <script>
-        // 🔥 SOLUCIÓN DEFINITIVA: Leer datos directamente del DOM
-        
         let galleryCleanup: (() => void) | null = null;
 
         function initGallery() {
-            console.log('🚀 Iniciando galería...');
-
-            // Limpiar instancia anterior
             if (galleryCleanup) {
-                console.log('🧹 Limpiando galería anterior');
                 galleryCleanup();
             }
 
-            // 1️⃣ LEER DATOS DEL DOM (NO de define:vars)
             const galleryData = document.getElementById('gallery-data');
-            if (!galleryData) {
-                console.error('❌ No se encontró gallery-data');
-                return;
-            }
+            if (!galleryData) return;
 
             const images = JSON.parse(galleryData.dataset.images || '[]');
             const projectId = galleryData.dataset.projectId;
 
-            console.log(`📦 Proyecto: ${projectId}, Imágenes: ${images.length}`);
-
-            if (images.length === 0) {
-                console.warn('⚠️ No hay imágenes para mostrar');
-                return;
-            }
+            if (images.length === 0) return;
 
             let currentIndex = 0;
             
-            // 2️⃣ REFERENCIAS AL DOM
             const display = document.getElementById('main-display') as HTMLImageElement | null;
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
@@ -288,11 +289,7 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             const zoomContainer = document.getElementById('zoom-container');
             const closeLightbox = document.getElementById('close-lightbox');
 
-            // 3️⃣ RESETEAR TODAS LAS IMÁGENES INMEDIATAMENTE
-            console.log('🖼️ Cargando imágenes...');
-            
             if (display) {
-                // Forzar limpieza y recarga
                 display.style.opacity = '0';
                 display.src = '';
                 setTimeout(() => {
@@ -306,7 +303,6 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 lightboxImg.src = images[0];
             }
 
-            // Actualizar miniaturas
             thumbs.forEach((btn, i) => {
                 const img = btn.querySelector('img');
                 if (img && images[i]) {
@@ -314,7 +310,6 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 }
             });
 
-            // 4️⃣ FUNCIONES DE LA GALERÍA
             function updateAllViews(index: number) {
                 currentIndex = index;
                 
@@ -349,22 +344,18 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 updateAllViews(newIndex);
             }
 
-            // 5️⃣ BIS - GESTOS TÁCTILES (SWIPE)
-            // Variables para almacenar las coordenadas del toque
             let touchStartX = 0;
             let touchStartY = 0;
             let touchEndX = 0;
             let touchEndY = 0;
-            const minSwipeDistance = 50; // Distancia mínima en píxeles para considerar un swipe
+            const minSwipeDistance = 50;
 
             const onTouchStart = (e: TouchEvent) => {
-                // Guardamos donde empieza el toque
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
             };
 
             const onTouchEnd = (e: TouchEvent) => {
-                // Guardamos donde termina el toque (changedTouches porque el toque ya no está activo)
                 touchEndX = e.changedTouches[0].clientX;
                 touchEndY = e.changedTouches[0].clientY;
                 detectSwipe();
@@ -374,24 +365,17 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 const diffX = touchEndX - touchStartX;
                 const diffY = touchEndY - touchStartY;
 
-                // Comprobamos si el movimiento es más horizontal que vertical
-                // Esto evita que se active el swipe cuando el usuario hace scroll en la página
                 if (Math.abs(diffX) > Math.abs(diffY)) {
-                    // Si la distancia supera el umbral mínimo
                     if (Math.abs(diffX) > minSwipeDistance) {
                         if (diffX > 0) {
-                            // Swipe a la derecha -> Imagen anterior
                             navigate(-1);
                         } else {
-                            // Swipe a la izquierda -> Imagen siguiente
                             navigate(1);
                         }
                     }
                 }
             }
 
-
-            // 6️⃣ EVENT HANDLERS
             const handlePrevClick = (e: Event) => { 
                 e.stopPropagation(); 
                 navigate(-1); 
@@ -403,7 +387,6 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             };
 
             const handleZoomClick = (e: Event) => {
-                // Si el click proviene de los botones de navegación, no hacemos zoom
                 if ((e.target as HTMLElement).closest('button')) return;
                 
                 if(lightboxImg) lightboxImg.src = images[currentIndex];
@@ -440,19 +423,15 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 if(e.target === lightbox) closeBox();
             };
 
-            // 7️⃣ ASIGNAR EVENTOS
             prevBtn?.addEventListener('click', handlePrevClick as EventListener);
             nextBtn?.addEventListener('click', handleNextClick as EventListener);
             
-            // Eventos para el contenedor principal (Zoom click y Swipe touch)
             zoomContainer?.addEventListener('click', handleZoomClick as EventListener);
             zoomContainer?.addEventListener('touchstart', onTouchStart as EventListener, { passive: true });
             zoomContainer?.addEventListener('touchend', onTouchEnd as EventListener);
 
-            // Eventos para el LIGHTBOX (Swipe touch) - AÑADIDO AQUÍ
             lightbox?.addEventListener('touchstart', onTouchStart as EventListener, { passive: true });
             lightbox?.addEventListener('touchend', onTouchEnd as EventListener);
-
 
             closeLightbox?.addEventListener('click', closeBox);
             lightboxPrev?.addEventListener('click', ((e: Event) => { e.stopPropagation(); navigate(-1); }) as EventListener);
@@ -464,26 +443,18 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 btn.addEventListener('click', handleThumbClick as EventListener);
             });
 
-            // Inicializar primera miniatura
             updateAllViews(0);
 
-            console.log('✅ Galería inicializada correctamente');
-
-            // 8️⃣ FUNCIÓN DE LIMPIEZA
             galleryCleanup = () => {
-                console.log('🧹 Ejecutando cleanup...');
                 prevBtn?.removeEventListener('click', handlePrevClick as EventListener);
                 nextBtn?.removeEventListener('click', handleNextClick as EventListener);
                 
-                // Limpiamos eventos del contenedor principal
                 zoomContainer?.removeEventListener('click', handleZoomClick as EventListener);
                 zoomContainer?.removeEventListener('touchstart', onTouchStart as EventListener);
                 zoomContainer?.removeEventListener('touchend', onTouchEnd as EventListener);
 
-                // Limpiamos eventos del LIGHTBOX - AÑADIDO AQUÍ
                 lightbox?.removeEventListener('touchstart', onTouchStart as EventListener);
                 lightbox?.removeEventListener('touchend', onTouchEnd as EventListener);
-
 
                 closeLightbox?.removeEventListener('click', closeBox);
                 lightbox?.removeEventListener('click', handleLightboxBgClick as EventListener);
@@ -493,21 +464,14 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
                 });
                 document.body.style.overflow = '';
                 
-                // Limpiar imágenes del DOM
                 if (display) display.src = '';
                 if (lightboxImg) lightboxImg.src = '';
             };
         }
 
-        // 9️⃣ EVENTOS DEL CICLO DE VIDA DE ASTRO
-        
-        // Primera carga
         initGallery();
         
-        // Después de cada transición (CRÍTICO)
         document.addEventListener('astro:after-swap', () => {
-            console.log('🔄 Astro: after-swap - Esperando DOM...');
-            // Esperar a que el DOM esté completamente actualizado
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     initGallery();
@@ -515,17 +479,13 @@ const nextProject = projects[currentIndex === projects.length - 1 ? 0 : currentI
             });
         });
         
-        // Antes de salir de la página
         document.addEventListener('astro:before-preparation', () => {
-            console.log('👋 Astro: before-preparation - Limpiando...');
             if (galleryCleanup) {
                 galleryCleanup();
             }
         });
 
-        // Cuando la página se carga completamente
         document.addEventListener('astro:page-load', () => {
-            console.log('📄 Astro: page-load');
             initGallery();
         });
     </script>
