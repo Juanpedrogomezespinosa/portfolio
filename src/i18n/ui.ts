@@ -31,6 +31,7 @@ export const ui = {
     "skills.backend": "Backend",
     "skills.qa": "QA & Testing",
     "skills.tools": "Herramientas & DevOps",
+    "skills.ai": "IA & Automatización", // <-- NUEVA LÍNEA AÑADIDA
 
     // Cualificaciones
     "qual.title": "Estudios y Certificaciones",
@@ -81,6 +82,7 @@ export const ui = {
     "skills.backend": "Backend",
     "skills.qa": "QA & Testing",
     "skills.tools": "Tools & DevOps",
+    "skills.ai": "AI & Automation", // <-- NUEVA LÍNEA AÑADIDA
 
     // Qualifications
     "qual.title": "Education & Certifications",

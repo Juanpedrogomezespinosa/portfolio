@@ -42,6 +42,14 @@ export const cvData = {
       "Selenium",
     ],
     tools: ["Git", "GitHub", "Jira", "Slack", "Docker", "VS Code"],
+    ai: [
+      "Claude / Anthropic",
+      "MCP",
+      "Prompt Engineering",
+      "OpenAI",
+      "Cursor",
+      "Make",
+    ],
   },
 
   // ORDENADO CRONOLÓGICAMENTE (2025 -> 2020)
