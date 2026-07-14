@@ -25,9 +25,10 @@ const isEs = lang === 'es';
                 <div class="space-y-8 border-l-2 border-slate-800 ml-3 pl-8 relative">
                     {cvData.experience.map(job => (
                         <div class="relative group">
-                            <span class="absolute -left-[39px] top-1 h-5 w-5 rounded-full border-4 border-slate-950 bg-blue-600 shadow-sm"></span>
+                            {/* Ajustado a -43px para centrar perfectamente con el borde */}
+                            <span class="absolute -left-[43px] top-0 h-5 w-5 rounded-full border-4 border-slate-950 bg-blue-600 shadow-sm"></span>
                             
-                            <h4 class="font-bold text-white text-lg">{isEs ? job.role.es : job.role.en}</h4>
+                            <h4 class="font-bold text-white text-lg leading-none mb-1 pt-[2px]">{isEs ? job.role.es : job.role.en}</h4>
                             <p class="text-sm text-blue-400 font-medium mb-1">{job.company}</p>
                             <p class="text-xs text-slate-500 mb-2 font-mono">{isEs ? job.date.es : job.date.en}</p>
                             
@@ -49,9 +50,10 @@ const isEs = lang === 'es';
                 <div class="space-y-8 border-l-2 border-slate-800 ml-3 pl-8 relative">
                     {cvData.education.map(edu => (
                         <div class="relative group">
-                            <span class="absolute -left-[39px] top-1 h-5 w-5 rounded-full border-4 border-slate-950 bg-purple-600 shadow-sm"></span>
+                            {/* Ajustado a -43px para centrar perfectamente con el borde */}
+                            <span class="absolute -left-[43px] top-0 h-5 w-5 rounded-full border-4 border-slate-950 bg-purple-600 shadow-sm"></span>
                             
-                            <h4 class="font-bold text-white text-lg">{isEs ? edu.degree.es : edu.degree.en}</h4>
+                            <h4 class="font-bold text-white text-lg leading-none mb-1 pt-[2px]">{isEs ? edu.degree.es : edu.degree.en}</h4>
                             <p class="text-sm text-purple-400 font-medium mb-1">{edu.institution}</p>
                             <p class="text-xs text-slate-500 font-mono">{edu.date}</p>
                         </div>

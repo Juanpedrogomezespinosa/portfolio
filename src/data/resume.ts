@@ -68,8 +68,8 @@ export const cvData = {
         en: "Full Stack Developer",
       },
       date: {
-        es: "Mayo 2024 - Actualidad",
-        en: "May 2024 - Present",
+        es: "Mayo 2024 - septiembre 2025",
+        en: "May 2024 - september 2025",
       },
       description: {
         es: "Desarrollo integral de aplicaciones a medida utilizando el stack HTML5, CSS3, JavaScript y Node.js. Arquitectura de bases de datos relacionales y no relacionales (MySQL/MongoDB) y gestión ágil de proyectos mediante metodología Scrum.",
