@@ -51,15 +51,15 @@ export default function Navbar({ lang, labels }: Props) {
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-slate-950/90 px-4 py-4 backdrop-blur-xl transition-all duration-300">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
         <a href={`/${lang}`} className="flex items-center gap-2 group">
-          <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-purple-600 to-blue-500 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 group-hover:scale-105">
-            JP
+          <div className="flex items-center justify-center size-10 rounded-xl bg-linear-to-br from-purple-600 to-blue-500 text-white font-bold text-lg shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all duration-300 ">
+            JG
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold text-white leading-none tracking-tight group-hover:text-blue-400 transition-colors">
+            <span className="text-lg font-bold text-white leading-none tracking-tight group-hover:text-purple-600 transition-colors">
               Juanpe
             </span>
-            <span className="text-[10px] font-medium text-slate-400 tracking-widest uppercase">
-              Portfolio
+            <span className="text-[10px] font-medium text-slate-400 tracking-widest uppercase group-hover:text-white ">
+              Gómez
             </span>
           </div>
         </a>
@@ -72,7 +72,7 @@ export default function Navbar({ lang, labels }: Props) {
               className="text-sm font-medium text-slate-300 hover:text-white transition-colors relative group"
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full"></span>
             </a>
           ))}
 
@@ -81,7 +81,7 @@ export default function Navbar({ lang, labels }: Props) {
           <div className="flex items-center gap-4">
             <a
               href={languageSwitchHref}
-              className="text-xs font-bold px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-blue-400 hover:text-blue-400 transition-colors"
+              className="text-xs font-bold px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-purple-600 hover:text-white transition-colors"
             >
               {languageSwitchLabel}
             </a>

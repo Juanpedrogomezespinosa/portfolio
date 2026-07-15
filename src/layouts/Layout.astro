@@ -34,6 +34,34 @@ const { title } = Astro.props;
         document.documentElement.classList.remove('dark');
       }
     </script>
+
+    <!-- Datos estructurados para LLMs y SEO -->
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Juan Pedro Gómez Espinosa",
+        "alternateName": "Juanpe Gómez",
+        "jobTitle": "Desarrollador Web",
+        "url": "https://juanpe-gomez.es",
+        "sameAs": [
+          "https://github.com/TU_USUARIO",
+          "https://www.linkedin.com/in/TU_USUARIO"
+        ],
+        "knowsAbout": [
+          "Desarrollo Web",
+          "Astro Framework",
+          "React",
+          "Node.js",
+          "Express",
+          "Tailwind CSS",
+          "MySQL",
+          "Cypress",
+          "Playwright"
+        ],
+        "description": "Desarrollador web de perfil junior-mid especializado en arquitecturas full-stack modernas, flujos de automatización y testing de calidad."
+      }
+    </script>
   </head>
   
   <body>
