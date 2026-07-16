@@ -16,9 +16,9 @@ export const ui = {
     "nav.contact": "Contacto",
 
     // Hero - El gancho principal
-    "hero.role": "Desarrollador Full Stack & QA Engineer",
+    "hero.role": "Desarrollador Full Stack, IA & QA Specialist.",
     "hero.description":
-      "No solo escribo código, garantizo su calidad. Fusiono la lógica del desarrollo con la precisión del testing para construir aplicaciones web robustas, escalables y libres de errores.",
+      "No solo desarrollo aplicaciones: las diseño, las construyo, las valido y optimizo su desarrollo con Inteligencia Artificial. Combino programación tradicional, IA y QA para entregar software más rápido, más fiable y con un alto estándar de calidad.",
     "hero.btn": "Hablemos",
 
     // Sobre Mí
@@ -67,9 +67,9 @@ export const ui = {
     "nav.contact": "Contact",
 
     // Hero - The main hook
-    "hero.role": "Full Stack Developer & QA Engineer",
+    "hero.role": "Full Stack Developer, IA & QA Engineer",
     "hero.description":
-      "I don't just write code; I ensure its quality. Merging development logic with testing precision to build robust, scalable, and bug-free web applications.",
+      "I don't just develop applications—I design, build, validate, and optimize their development with Artificial Intelligence. By combining traditional coding, AI, and QA, I deliver software faster, more reliably, and with a consistently high standard of quality.",
     "hero.btn": "Let's Talk",
 
     // About Me

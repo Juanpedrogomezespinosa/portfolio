@@ -1,8 +1,8 @@
 export const cvData = {
   name: "Juan Pedro Gómez",
   role: {
-    es: "Desarrollador Full Stack y QA Engineer",
-    en: "Full Stack Developer & QA Engineer",
+    es: "Desarrollador Full Stack, IA & QA Specialist.",
+    en: "Full Stack Developer, IA & QA Engineer",
   },
   contact: {
     email: "juanpedrogomezespinosa@gmail.com",
