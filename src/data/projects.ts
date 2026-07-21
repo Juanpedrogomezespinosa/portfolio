@@ -93,6 +93,7 @@ export const projects: Project[] = [
       quarkTechieContent5,
       quarkTechieContent6,
     ],
+    link: "https://quark-techie.com/",
     features: {
       es: [
         "Diseño y desarrollo web integral (UI/UX personalizada)",
